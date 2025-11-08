@@ -1,4 +1,4 @@
 let e = 1;
 let f =2;
 let g = e + f;
-print(g)
+alert(g);
