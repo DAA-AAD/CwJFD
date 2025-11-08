@@ -1,3 +1,6 @@
+# Javascript_Learning
+
+I'm learning the basics for Javascript at the moment so don't judge 
 # BallGame
 
 Basic Ball Program made following instructions from J.FD
