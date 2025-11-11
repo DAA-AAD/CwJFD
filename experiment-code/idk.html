@@ -110,7 +110,7 @@ for (const mp of movingPlat) {
   if((keys['ArrowUp']||keys['Space']||keys['KeyW']) && player.onGround){ player.vy = -player.jump; player.onGround = false; }
 
   // gravity
-  player.vy += (world.gravity * dt) - 10;
+  player.vy += (world.gravity * dt) - 20;
 
   // horizontal movement + collisions
   player.x += player.vx * dt;
@@ -189,7 +189,8 @@ function draw(){
   ctx.fillStyle = player.color;
   ctx.fillRect(player.x, player.y, player.w, player.h);
   // simple eyes
-  ctx.fillStyle = '#fff'; ctx.fillRect(player.x + 8, player.y + 10, 6,6);
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(player.x - 18, player.y - 14, 30,30);
   ctx.fillRect(player.x + 22, player.y - 14, 30,30);
 
   // finish line (example)
@@ -215,7 +216,6 @@ function reset(){
   player.x = 80; player.y = 100; player.vx = 0; player.vy = 0; score = 0;
   coins.forEach(c => c.picked = false);
 }
-//maybe this will allow Git commit?
 requestAnimationFrame(loop);
 </script>
 </body>
