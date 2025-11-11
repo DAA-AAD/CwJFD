@@ -56,8 +56,8 @@ const cam = { x:0, y:0, width: innerWidth, height: innerHeight };
 // Platforms (x,y,width,height)
 let platforms = [
   {x:-10, y:400, w:210,h:28},
-  {x: 420, y: 330, w: 220, h: 28},
-  {x: 760, y: 260, w: 180, h: 28},
+  {x: 420, y: 280, w: 220, h: 28},
+  {x: 420, y: 180, w: 180, h: 28},
   {x: 1100, y: 200, w: 300, h: 28},
   {x: 1500, y: 360, w: 240, h: 28},
   {x: 1880, y: 300, w: 200, h: 28},
@@ -66,10 +66,10 @@ let platforms = [
 
 // Moving platform example
 const movingPlat = [
-  {x: 300, y: 520, w: 180, h: 28, baseX:300, range:240, speed: 10},
-  {x: 800, y: 380, w: 180, h: 28, baseX:800, range:150, speed: 10},
-  {x: 1400, y: 260, w: 200, h: 28, baseX:1400, range:180, speed: 1},
-  {x: 1800, y: 300, w: 160, h: 28, baseY:300, range:80, speed:10, vertical:true}
+  {x: 420, y: 230, w: 180, h: 28, baseX:420, range:80, speed: 40},
+  {x: 800, y: 380, w: 180, h: 28, baseX:800, range:150, speed: 80},
+  {x: 1400, y: 260, w: 200, h: 28, baseX:1400, range:180, speed: 80},
+  {x: 1800, y: 300, w: 160, h: 28, baseY:300, range:80, speed:80, vertical:true}
 ];
 for (const mp of movingPlat) platforms.push(mp);
 
