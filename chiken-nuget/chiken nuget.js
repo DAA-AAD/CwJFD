@@ -1,4 +1,4 @@
-let e = prompt('number');
-let f =prompt('number2');
-let sum = e+f
-alert(g);
+let e = 1;
+let f = 2;
+let sum = e + f;
+alert(sum);
