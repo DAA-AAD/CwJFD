@@ -1,0 +1,10 @@
+let e = 1;
+let f = 2;
+let sum = e + f;
+alert(sum + 'addition');
+let difference = e -f;
+alert (difference +'subtraction');
+let quotient = e/f;
+alert (quotient +'division');
+let product = e * f;
+alert(product +'multiplication');
