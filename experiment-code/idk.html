@@ -101,8 +101,8 @@ for (const mp of movingPlat) {
 
   // input
   let dir = 0;
-  if(keys['ArrowLeft']||keys['KeyA']) dir -= 1;
-  if(keys['ArrowRight']||keys['KeyD']) dir += 1;
+  if(keys['ArrowLeft']||keys['KeyA']) dir -= 1.5;
+  if(keys['ArrowRight']||keys['KeyD']) dir += 1.5;
   const accel = player.speed;
   player.vx = dir * accel;
 
