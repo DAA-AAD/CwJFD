@@ -110,7 +110,7 @@ for (const mp of movingPlat) {
   if((keys['ArrowUp']||keys['Space']||keys['KeyW']) && player.onGround){ player.vy = -player.jump; player.onGround = false; }
 
   // gravity
-  player.vy += (world.gravity * dt) - 15;
+  player.vy += (world.gravity * dt) - 19;
 
   // horizontal movement + collisions
   player.x += player.vx * dt;
@@ -186,9 +186,9 @@ function draw(){
   }
 
   // player
-  ctx.fillStyle = player.color;
+  {ctx.fillStyle = player.color;
   ctx.fillRect(player.x, player.y, player.w, player.h);
-  // simple eyes
+  //eyes
   ctx.fillStyle = '#fff';
   ctx.fillRect(player.x - 18, player.y - 14, 30,30);
   ctx.fillRect(player.x + 22, player.y - 14, 30,30);
