@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fixed Platformer</title>
+  <style>
+    html,body{height:100%;margin:0;font-family:Inter,system-ui}
+    #game{display:block;background:#87CEEB;width:100vw;height:100vh}
+  </style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<script>
+// ===============================================================
+//  FIXED VERSION - Player Sprite, Moving Platforms, No Freezing
+// ===============================================================
+
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+let DPR = Math.max(1, window.devicePixelRatio || 1);
+function resize(){
+  canvas.width = innerWidth * DPR;
+  canvas.height = innerHeight * DPR;
+  canvas.style.width = innerWidth + 'px';
+  canvas.style.height = innerHeight + 'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+addEventListener('resize', resize);
+resize();
+
+// ---------------------------------------------------------------
+//  LOAD PLAYER SPRITE
+// ---------------------------------------------------------------
+const playerSprite = new Image();
+playerSprite.src = "pictures/alastor.jpeg"; // Make sure file exists
+
+// ---------------------------------------------------------------
+//  INPUT
+// ---------------------------------------------------------------
+const keys = {};
+addEventListener('keydown', e => { keys[e.code] = true; });
+addEventListener('keyup', e => { keys[e.code] = false; });
+
+// ---------------------------------------------------------------
+//  PLAYER
+// ---------------------------------------------------------------
+const player = {
+  x: 80, y: 100, w: 48, h: 64,
+  vx: 0, vy: 0,
+  speed: 360, jump: 520,
+  onGround: false,
+  color: '#ff6b6b'
+};
+
+// CAMERA
+const cam = { x:0, y:0 };
+
+// ---------------------------------------------------------------
+//  PLATFORMS
+// ---------------------------------------------------------------
+let platforms = [
+  {x:-200, y:420, w:1200, h:48},
+  {x:420, y:330, w:220, h:28},
+  {x:760, y:260, w:180, h:28},
+  {x:1100, y:200, w:300, h:28},
+  {x:1500, y:360, w:240, h:28},
+  {x:1880, y:300, w:200, h:28},
+  {x:2200, y:420, w:800, h:48}
+];
+
+// ---------------------------------------------------------------
+//  MOVING PLATFORMS
+// ---------------------------------------------------------------
+const movingPlat = [
+  {x: 420,  y:230, w:180, h:28, baseX:420,  baseY:230, range:80,  speed:40, vertical:false},
+  {x: 800,  y:380, w:180, h:28, baseX:800,  baseY:380, range:50,  speed:80, vertical:false},
+  {x:1400, y:260, w:200, h:28, baseX:1400, baseY:260, range:180, speed:80, vertical:false},
+  {x:1800, y:300, w:160, h:28, baseX:1800, baseY:300, range:80,  speed:80, vertical:true}
+];
+
+for (const mp of movingPlat) platforms.push(mp);
+
+// ---------------------------------------------------------------
+//  COINS
+// ---------------------------------------------------------------
+let coins = [
+  {x:460,y:290,r:8, picked:false},
+  {x:800,y:230,r:8, picked:false},
+  {x:1200,y:170,r:8, picked:false},
+  {x:1550,y:320,r:8, picked:false},
+  {x:1920,y:260,r:8, picked:false}
+];
+let score = 0;
+let last = performance.now();
+
+function rectsIntersect(a,b){
+  return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+}
+
+// ---------------------------------------------------------------
+//  PHYSICS
+// ---------------------------------------------------------------
+function physics(dt){
+
+  // Move platforms
+  for (const mp of movingPlat){
+    const t = performance.now()/1000 * mp.speed/20;
+    if (mp.vertical) mp.y = mp.baseY + Math.sin(t) * mp.range;
+    else mp.x = mp.baseX + Math.sin(t) * mp.range;
+  }
+
+  // Input
+  let dir = 0;
+  if(keys['ArrowLeft']||keys['KeyA']) dir -= 1;
+  if(keys['ArrowRight']||keys['KeyD']) dir += 1;
+  player.vx = dir * player.speed;
+
+  // Jump
+  if((keys['ArrowUp']||keys['Space']||keys['KeyW']) && player.onGround){
+    player.vy = -player.jump;
+    player.onGround = false;
+  }
+
+  // Gravity
+  player.vy += 1800 * dt;
+
+  // Move horizontally
+  player.x += player.vx * dt;
+  for(const p of platforms){
+    if(rectsIntersect(player,p)){
+      if(player.vx > 0) player.x = p.x - player.w;
+      else if(player.vx < 0) player.x = p.x + p.w;
+      player.vx = 0;
+    }
+  }
+
+  // Move vertically
+  player.y += player.vy * dt;
+  player.onGround = false;
+  for(const p of platforms){
+    if(rectsIntersect(player,p)){
+      if(player.vy > 0){
+        player.y = p.y - player.h;
+        player.vy = 0;
+        player.onGround = true;
+      } else if(player.vy < 0){
+        player.y = p.y + p.h;
+        player.vy = 0;
+      }
+    }
+  }
+
+  // Coin pickup
+  for(const c of coins){
+    if(!c.picked){
+      const dx = (player.x + player.w/2) - c.x;
+      const dy = (player.y + player.h/2) - c.y;
+      if(Math.hypot(dx,dy) < c.r + Math.max(player.w,player.h)/2){
+        c.picked = true; score++;
+      }
+    }
+  }
+
+  if(player.y > 1500) reset();
+}
+
+// ---------------------------------------------------------------
+//  CAMERA
+// ---------------------------------------------------------------
+function updateCam(){
+  const targetX = player.x + player.w/2 - canvas.width/(2*DPR) + 120;
+  cam.x += (targetX - cam.x) * 0.12;
+}
+
+// ---------------------------------------------------------------
+//  DRAW
+// ---------------------------------------------------------------
+function draw(){
+  ctx.fillStyle = '#87CEEB';
+  ctx.fillRect(0,0,canvas.width/DPR,canvas.height/DPR);
+
+  ctx.save();
+  ctx.translate(-cam.x, -cam.y);
+
+  // Platforms
+  for(const p of platforms){
+    ctx.fillStyle = movingPlat.includes(p) ? '#8b5cf6' : '#2f6f44';
+    ctx.fillRect(p.x, p.y, p.w, p.h);
+  }
+
+  // Coins
+  for(const c of coins){
+    if(!c.picked){
+      ctx.beginPath();
+      ctx.arc(c.x,c.y,c.r,0,Math.PI*2);
+      ctx.fillStyle = '#ffd166';
+      ctx.fill();
+    }
+  }
+
+  // Player
+  if (playerSprite.complete){
+    ctx.drawImage(playerSprite, player.x, player.y, player.w, player.h);
+  } else {
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x, player.y, player.w, player.h);
+  }
+
+  ctx.restore();
+}
+
+// ---------------------------------------------------------------
+//  LOOP
+// ---------------------------------------------------------------
+function loop(now){
+  const dt = Math.min(0.033, (now - last)/1000);
+  last = now;
+  physics(dt);
+  updateCam();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+function reset(){
+  player.x = 80; player.y = 100; player.vx=0; player.vy=0; score=0;
+  coins.forEach(c=>c.picked=false);
+}
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
