@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title> Shunsui's platformer</title>
+  <title>Simple JS Platformer — Reference</title>
   <style>
     html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
     #game{display:block;background:#87CEEB;width:100vw;height:100vh}
@@ -41,8 +41,6 @@ const world = {
 };
 
 // Player
-const playerSprite = new Image();
-playerSprite.src = "pictures/alastor.jpg";
 const player = {
   x: 80, y: 100, w: 36, h: 48,
   vx: 0, vy: 0,
@@ -152,7 +150,7 @@ for (const mp of movingPlat) {
     }
   }
 
-  // world bounds
+  // simple world bounds
   if(player.y > 1500){ // fell off
     reset();
   }
@@ -162,7 +160,7 @@ function updateCam(){
   // center camera on player with some smoothing
   const targetX = player.x + player.w/2 - canvas.width/(2*DPR) + 120; // lead forward
   cam.x += (targetX - cam.x) * 0.12;
-  cam.y += (targetY -cam.y)*0.12;
+  cam.y = 0; // keep vertical fixed for simplicity
 }
 
 function draw(){
@@ -176,7 +174,7 @@ function draw(){
   // ground/tiles
   ctx.fillStyle = '#2f6f44';
   for(const p of platforms){
-    ctx.fillStyle = movingPlat.includes(p) ? '#8b5cf6' : '#2f6f44';
+    ctx.fillStyle = (p === movingPlat) ? '#8b5cf6' : '#2f6f44';
     ctx.fillRect(p.x, p.y, p.w, p.h);
   }
 
@@ -188,13 +186,15 @@ function draw(){
   }
 
   // player
-if (playerSprite.complete) {
-    ctx.drawImage(playerSprite, player.x, player.y, player.w, player.h);
-} else {
-    // fallback if image isn't loaded yet
-    ctx.fillStyle = player.color;
-    ctx.fillRect(player.x, player.y, player.w, player.h);
-}
+  ctx.fillStyle = player.color;
+  ctx.fillRect(player.x, player.y, player.w, player.h);
+  // simple eyes
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(player.x - 18, player.y - 14, 30,30);
+  ctx.fillRect(player.x + 22, player.y - 14, 30,30);
+  ctx.fillStyle = '#ff0000';
+  ctx.fillRect(player.x -8, player.y - 10, 15,15); 
+  ctx.fillRect(player.x +32, player.y - 10, 15,15); 
   
   // finish line (example)
   ctx.fillStyle = '#ffb703'; ctx.fillRect(2500, 360-120, 12, 120);
