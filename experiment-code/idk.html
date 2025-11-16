@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title> Shunsui's platformer</title>
+  <title>Simple JS Platformer — Reference</title>
   <style>
     html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
     #game{display:block;background:#87CEEB;width:100vw;height:100vh}
@@ -15,8 +15,6 @@
 <div class="hint">wasd + arrow keys</div>
 
 <script>
-  const playerSprite = new Image();
-playerSprite.src = "pictures/alastor.jpeg";
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 let DPR = Math.max(1, window.devicePixelRatio || 1);
@@ -26,7 +24,7 @@ function resize(){
   canvas.style.width = innerWidth + 'px';
   canvas.style.height = innerHeight + 'px';
   ctx.setTransform(DPR,0,0,DPR,0,0);
-};
+}
 addEventListener('resize', resize);
 resize();
 
@@ -42,20 +40,14 @@ const world = {
   // sky blue=87CEEB
 };
 
-//player
+// Player
 const player = {
   x: 80, y: 100, w: 36, h: 48,
   vx: 0, vy: 0,
   speed: 360, jump: 520,
   onGround: false,
   color: '#ff6b6b'
-};
-//player.2
-if (playerSprite.complete) {
-    ctx.drawImage(playerSprite, player.x, player.y, player.w, player.h);
-} else {
-  ctx.fillStyle = player.color;
-    ctx.fillRect(player.x, player.y, player.w, player.h);
+  //Persimmon /\ color
 };
 
 // Camera
@@ -74,10 +66,10 @@ let platforms = [
 
 // Moving platforms
 const movingPlat = [
-  {x: 420, y: 230, w: 180, h: 28, baseX:420, baseY:230,range:80, speed: 40, vertical:false},
-  {x: 800, y: 380, w: 180, h: 28, baseX:800, baseY:380, range:50, speed: 80, vertical:false},
-  {x: 1400, y: 260, w: 200, h: 28, baseX:1400, baseY:260, range:180, speed: 80, vertical:false},
-  {x: 1800, y: 300, w: 160, h: 28, baseY:300, baseX:1800, range:80, speed:80, vertical:true}
+  {x: 420, y: 230, w: 180, h: 28, baseX:420, range:80, speed: 40},
+  {x: 800, y: 380, w: 180, h: 28, baseX:800, range:150, speed: 80},
+  {x: 1400, y: 260, w: 200, h: 28, baseX:1400, range:180, speed: 80},
+  {x: 1800, y: 300, w: 160, h: 28, baseY:300, range:80, speed:80, vertical:true}
 ];
 for (const mp of movingPlat) platforms.push(mp);
 
@@ -95,7 +87,7 @@ let last = performance.now();
 
 function rectsIntersect(a,b){
   return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
-};
+}
 
 function physics(dt){
  // update all moving platforms
@@ -105,7 +97,7 @@ for (const mp of movingPlat) {
     mp.y = mp.baseY + Math.sin(t) * mp.range;
   else
     mp.x = mp.baseX + Math.sin(t) * mp.range;
-};
+}
 
   // input
   let dir = 0;
@@ -127,8 +119,8 @@ for (const mp of movingPlat) {
     if(rectsIntersect(player, p)){
       if(player.vx > 0) player.x = p.x - player.w; else if(player.vx < 0) player.x = p.x + p.w;
       player.vx = 0;
-    };
-  };
+    }
+  }
 
   // vertical
   player.y += player.vy * dt;
@@ -143,9 +135,9 @@ for (const mp of movingPlat) {
       } else if(player.vy < 0){ // hitting head
         player.y = p.y + p.h;
         player.vy = 0;
-      };
-    };
-  };
+      }
+    }
+  }
 
   // coin pickup
   for(const c of coins){
@@ -154,22 +146,22 @@ for (const mp of movingPlat) {
       const dy = (player.y + player.h/2) - c.y;
       if(Math.hypot(dx,dy) < c.r + Math.max(player.w,player.h)/2 ){
         c.picked = true; score += 1;
-      };
-    };
-  };
+      }
+    }
+  }
 
-  // world bounds
+  // simple world bounds
   if(player.y > 1500){ // fell off
     reset();
   }
-};
+}
 
 function updateCam(){
   // center camera on player with some smoothing
   const targetX = player.x + player.w/2 - canvas.width/(2*DPR) + 120; // lead forward
   cam.x += (targetX - cam.x) * 0.12;
-  cam.y =0;
-};
+  cam.y = 0; // keep vertical fixed for simplicity
+}
 
 function draw(){
   // clear
@@ -182,25 +174,27 @@ function draw(){
   // ground/tiles
   ctx.fillStyle = '#2f6f44';
   for(const p of platforms){
-    ctx.fillStyle = movingPlat.includes(p) ? '#8b5cf6' : '#2f6f44';
+    ctx.fillStyle = (p === movingPlat) ? '#8b5cf6' : '#2f6f44';
     ctx.fillRect(p.x, p.y, p.w, p.h);
-  };
+  }
 
   // coins
   for(const c of coins){
     if(c.picked) continue;
     ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, Math.PI*2); ctx.fillStyle='#ffd166'; ctx.fill();
     ctx.strokeStyle = 'rgba(0,0,0,0.12)'; ctx.stroke();
-  };
+  }
 
   // player
-if (playerSprite.complete) {
-    ctx.drawImage(playerSprite, player.x, player.y, player.w, player.h);
-} else {
-    // fallback if image isn't loaded yet
-    ctx.fillStyle = player.color;
-    ctx.fillRect(player.x, player.y, player.w, player.h);
-};
+  ctx.fillStyle = player.color;
+  ctx.fillRect(player.x, player.y, player.w, player.h);
+  // simple eyes
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(player.x - 18, player.y - 14, 30,30);
+  ctx.fillRect(player.x + 22, player.y - 14, 30,30);
+  ctx.fillStyle = '#ff0000';
+  ctx.fillRect(player.x -8, player.y - 10, 15,15); 
+  ctx.fillRect(player.x +32, player.y - 10, 15,15); 
   
   // finish line (example)
   ctx.fillStyle = '#ffb703'; ctx.fillRect(2500, 360-120, 12, 120);
@@ -210,7 +204,7 @@ if (playerSprite.complete) {
   // HUD
   ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(12,canvas.height/DPR-48,160,36);
   ctx.fillStyle = '#fff'; ctx.font = '16px system-ui'; ctx.fillText('Score: ' + score, 22, canvas.height/DPR-22);
-};
+}
 
 function loop(now){
   const dt = Math.min(0.033, (now - last)/1000);
@@ -219,12 +213,12 @@ function loop(now){
   updateCam();
   draw();
   requestAnimationFrame(loop);
-};
+}
 
 function reset(){
   player.x = 80; player.y = 100; player.vx = 0; player.vy = 0; score = 0;
   coins.forEach(c => c.picked = false);
-};
+}
 requestAnimationFrame(loop);
 </script>
 </body>
