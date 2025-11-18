@@ -15,6 +15,28 @@
 <div class="hint">wasd + arrow keys</div>
 
 <script>
+  //random numbers
+const min =620;
+const max=1880;
+//random variables
+let xr=Math.random()*(max-min)+min;
+console.log(xr+' '+'location');
+let xr2 =Math.random()*(max-min)+min;
+console.log(xr2+' '+'location');
+let xr3=Math.random()*(max-min)+min;
+console.log(xr3+' '+'location');
+
+const min2=40;
+const max2=222;
+let sped=Math.random()*(max2-min2)+min2;
+console.log(sped+' '+'speed');
+let sped2=Math.random()*(max2-min2)+min2;
+console.log(sped2+' '+'speed');
+let sped3=Math.random()*(max2-min2)+min2;
+console.log(sped3+' '+'speed');
+let sped4=Math.random()*(max2-min2)+min2;
+console.log(sped4+' '+'speed');
+
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 let DPR = Math.max(1, window.devicePixelRatio || 1);
@@ -49,29 +71,27 @@ const player = {
   color: '#ff6b6b'
   //Persimmon /\ color
 };
-//random numbers
-const min =-10;
-const max=1880;
-console.log("go to line 55 and also this is version"+" "Math.random())
+
 // Camera
 const cam = { x:0, y:0, width: innerWidth, height: innerHeight };
 // Platforms (x,y,width,height)
+//random plat' Math.random()*(max-min)+min
 let platforms = [
-    {x:Math.random()*(max-min)+min, y:400, w:210,h:28},
+    {x:-10, y:400, w:210,h:28},
   {x: 420, y: 300, w: 220, h: 28},
   {x: 420, y: 180, w: 180, h: 28},
-  {x: 1100, y: 200, w: 300, h: 28},
-  {x: 1500, y: 360, w: 240, h: 28},
-  {x: 1880, y: 300, w: 200, h: 28},
+  {x: xr, y: 200, w: 300, h: 28},
+  {x: xr2, y: 360, w: 240, h: 28},
+  {x: xr3, y: 300, w: 200, h: 28},
   {x: 2200, y: 420, w: 800, h: 48}
 ];
 
 // Moving platforms
 const movingPlat = [
-  {x: 420, y: 230, w: 180, h: 28, baseX:420, range:80, speed: 40},
-  {x: 800, y: 380, w: 180, h: 28, baseX:800, range:150, speed: 80},
-  {x: 1400, y: 260, w: 200, h: 28, baseX:1400, range:180, speed: 80},
-  {x: 1800, y: 300, w: 160, h: 28, baseY:300, range:80, speed:80, vertical:true}
+  {x: 420, y: 230, w: 180, h: 28, baseX:420, range:80, speed: sped},
+  {x: 800, y: 380, w: 180, h: 28, baseX:800, range:150, speed: sped2},
+  {x: 1400, y: 260, w: 200, h: 28, baseX:1400, range:180, speed: sped3},
+  {x: 1800, y: 300, w: 160, h: 28, baseY:300, range:80, speed:sped4, vertical:true}
 ];
 for (const mp of movingPlat) platforms.push(mp);
 
@@ -154,6 +174,21 @@ for (const mp of movingPlat) {
 
   // simple world bounds
   if(player.y > 1500){ // fell off
+ let xr=Math.random()*(max-min)+min;
+console.log(xr+' '+'location');
+let xr2 =Math.random()*(max-min)+min;
+console.log(xr2+' '+'location');
+let xr3=Math.random()*(max-min)+min;
+console.log(xr3+' '+'location');
+let platforms = [
+    {x:-10, y:400, w:210,h:28},
+  {x: 420, y: 300, w: 220, h: 28},
+  {x: 420, y: 180, w: 180, h: 28},
+  {x: xr, y: 200, w: 300, h: 28},
+  {x: xr2, y: 360, w: 240, h: 28},
+  {x: xr3, y: 300, w: 200, h: 28},
+  {x: 2200, y: 420, w: 800, h: 48}
+];
     reset();
   }
 }
