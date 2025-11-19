@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Simple JS Platformer — Reference</title>
+  <title>platformer</title>
   <style>
     html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
     #game{display:block;background:#87CEEB;width:100vw;height:100vh}
@@ -53,33 +53,43 @@ const player = {
 // Camera
 const cam = { x:0, y:0, width: innerWidth, height: innerHeight };
 
-// Platforms (x,y,width,height)
+// Platforms
+const minx=1100;
+const maxx=1880;
+const miny=180;
+const maxy=420;
+let px=Math.random()*(maxx+minx)-minx;
+let py=Math.random()*(maxy+miny)-miny;
+console.log(px);
 let platforms = [
     {x:-10, y:400, w:210,h:28},
   {x: 420, y: 300, w: 220, h: 28},
   {x: 420, y: 180, w: 180, h: 28},
-  {x: 1100, y: 200, w: 300, h: 28},
-  {x: 1500, y: 360, w: 240, h: 28},
-  {x: 1880, y: 300, w: 200, h: 28},
+  {x: px, y: py, w: 300, h: 28},
+  {x: px-400, y: py+160, w: 240, h: 28},
+  {x: px-700, y: py+100, w: 200, h: 28},
   {x: 2200, y: 420, w: 800, h: 48}
 ];
 
 // Moving platforms
 const movingPlat = [
   {x: 420, y: 230, w: 180, h: 28, baseX:420, range:80, speed: 40},
-  {x: 800, y: 380, w: 180, h: 28, baseX:800, range:150, speed: 80},
-  {x: 1400, y: 260, w: 200, h: 28, baseX:1400, range:180, speed: 80},
-  {x: 1800, y: 300, w: 160, h: 28, baseY:300, range:80, speed:80, vertical:true}
+  {x: px+300, y: py+200, w: 180, h: 28, baseX:800, range:150, speed: 80},
+  {x: px+300, y: py+80, w: 200, h: 28, baseX:1400, range:180, speed: 80},
+  {x: px+700, y: py+120, w: 160, h: 28, baseY:300, range:80, speed:80, vertical:true}
 ];
 for (const mp of movingPlat) platforms.push(mp);
-
+let cx=px-100;
+let cy=py-60;
 // Collectibles
+const minc=1100;
+const maxc=1880;
 let coins = [
   {x:460,y:290,r:8, picked:false},
-  {x:800,y:230,r:8, picked:false},
-  {x:1200,y:170,r:8, picked:false},
-  {x:1550,y:320,r:8, picked:false},
-  {x:1920,y:260,r:8, picked:false}
+  {x:cx+Math.random()*(minc+maxc)-minc,y:cy,r:8, picked:false},
+  {x:cx+Math.random()*(minc+maxc)-100,y:cy,r:8, picked:false},
+  {x:cx+(Math.random()*(minc+maxc)-minc)+100,y:cy,r:8, picked:false},
+  {x:cx+460,y:cy,r:8, picked:false}
 ];
 
 let score = 0;
@@ -150,17 +160,17 @@ for (const mp of movingPlat) {
     }
   }
 
-  // simple world bounds
+  //world bounds
   if(player.y > 1500){ // fell off
     reset();
   }
 }
 
 function updateCam(){
-  // center camera on player with some smoothing
-  const targetX = player.x + player.w/2 - canvas.width/(2*DPR) + 120; // lead forward
+  const targetX = player.x + player.w/2 - canvas.width/(2*DPR) + 120;
+   const targetY=player.y+player.w/2-canvas.height/(2*DPR)+120;
   cam.x += (targetX - cam.x) * 0.12;
-  cam.y = 0; // keep vertical fixed for simplicity
+  cam.y += (targetY-cam.y)*0.12;
 }
 
 function draw(){
@@ -188,7 +198,7 @@ function draw(){
   // player
   ctx.fillStyle = player.color;
   ctx.fillRect(player.x, player.y, player.w, player.h);
-  // simple eyes
+  //eyes
   ctx.fillStyle = '#fff';
   ctx.fillRect(player.x - 18, player.y - 14, 30,30);
   ctx.fillRect(player.x + 22, player.y - 14, 30,30);
