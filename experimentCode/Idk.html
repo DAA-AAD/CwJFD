@@ -54,44 +54,42 @@ const player = {
 const cam = { x:0, y:0, width: innerWidth, height: innerHeight };
 
 // Platforms
-const minx=1100;
-const maxx=1880;
+const minx=640;
+const maxx=900;
 const miny=180;
 const maxy=420;
-let px=Math.random()*(maxx+minx)-minx;
-let py=Math.random()*(maxy+miny)-miny;
-console.log(px);
+let px=Math.floor(Math.random()*(maxx+minx))+100;
+let py=Math.floor(Math.random()*(maxy+miny)-miny);
+console.log(px+' '+'px');
 let platforms = [
     {x:-10, y:400, w:210,h:28},
   {x: 420, y: 300, w: 220, h: 28},
   {x: 420, y: 180, w: 180, h: 28},
   {x: px, y: py, w: 300, h: 28},
-  {x: px-400, y: py+160, w: 240, h: 28},
-  {x: px-700, y: py+100, w: 200, h: 28},
+  {x: px+400, y: py+160, w: 240, h: 28},
+  {x: px+700, y: py+100, w: 200, h: 28},
   {x: 2200, y: 420, w: 800, h: 48}
 ];
 
 // Moving platforms
 const movingPlat = [
   {x: 420, y: 230, w: 180, h: 28, baseX:420, range:80, speed: 40},
-  {x: px+300, y: py+200, w: 180, h: 28, baseX:800, range:150, speed: 80},
-  {x: px+300, y: py+80, w: 200, h: 28, baseX:1400, range:180, speed: 80},
-  {x: px+700, y: py+120, w: 160, h: 28, baseY:300, range:80, speed:80, vertical:true}
+  {x: px+300, y: py+200, w: 180, h: 28, baseX:px+300, range:150, speed: 80},
+  {x: px+500, y: py+80, w: 200, h: 28, baseX:px+500, range:180, speed: 90},
+  {x: px+700, y: py+120, w: 160, h: 28, baseY:300, range:80, speed:60, vertical:true}
 ];
 for (const mp of movingPlat) platforms.push(mp);
-let cx=px-100;
-let cy=py-60;
-// Collectibles
-const minc=1100;
-const maxc=1880;
+let cx=[px+150,px+350,px+550,px+250];
+console.log(cx+' '+'cx');
+//coins
 let coins = [
-  {x:460,y:290,r:8, picked:false},
-  {x:cx+Math.random()*(minc+maxc)-minc,y:cy,r:8, picked:false},
-  {x:cx+Math.random()*(minc+maxc)-100,y:cy,r:8, picked:false},
-  {x:cx+(Math.random()*(minc+maxc)-minc)+100,y:cy,r:8, picked:false},
-  {x:cx+460,y:cy,r:8, picked:false}
+  {x:450,y:290,r:8, picked:false},
+  {x:cx[3],y:py-50,r:16, picked:false},
+  {x:cx[0],y:py+100,r:16, picked:false},
+  {x:cx[1],y:py-20,r:16, picked:false},
+  {x:cx[2],y:py+20,r:16, picked:false}
 ];
-
+//max=3880  2200+1680
 let score = 0;
 let last = performance.now();
 
