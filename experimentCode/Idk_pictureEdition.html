@@ -25,7 +25,10 @@ function resize(){
   canvas.style.height = innerHeight + 'px';
   ctx.setTransform(DPR,0,0,DPR,0,0);
 }
-addEventListener('resize', resize);
+const bgImg = new Image();
+bgImg.src = "../pictures/Asriel_PFP_Git.png";
+
+addEventListener ('resize', resize);
 resize();
 
 // Input
@@ -33,9 +36,9 @@ const keys = {};
 addEventListener('keydown', e => { keys[e.code] = true; if(e.code==='Space') e.preventDefault(); });
 addEventListener('keyup', e => { keys[e.code] = false; });
 
-// Basic world
+// background
 const world = {
-  gravity: 1800, // px/s^2
+  gravity: 1800,
   color: '#00308F'
   // sky blue=87CEEB
 };
@@ -153,11 +156,11 @@ for (const mp of movingPlat) {
 
   for(const p of platforms){
     if(rectsIntersect(player, p)){
-      if(player.vy > 0){ // falling -> land on top
+      if(player.vy > 0){ //land on top of platform
         player.y = p.y - player.h;
         player.vy = 0;
         player.onGround = true;
-      } else if(player.vy < 0){ // hitting head
+      } else if(player.vy < 0){ // bottom platform bonk
         player.y = p.y + p.h;
         player.vy = 0;
       }
@@ -175,8 +178,8 @@ for (const mp of movingPlat) {
     }
   }
 
-  //world bounds
-  if(player.y > 1500){ // fell off
+  //pit
+  if(player.y > 1500){
     reset();
   }
 }
@@ -190,13 +193,18 @@ function updateCam(){
 
 function draw(){
   // clear
+if (bgImg.complete) {
+  ctx.drawImage(bgImg, 0, 0, canvas.width / DPR, canvas.height / DPR);
+} else {
+  // fallback color while loading
   ctx.fillStyle = world.color;
   ctx.fillRect(0,0,canvas.width/DPR,canvas.height/DPR);
+}
 
   ctx.save();
   ctx.translate(-cam.x, -cam.y);
 
-  // ground/tiles
+  // ground
   ctx.fillStyle = '#2f6f44';
   for(const p of platforms){
     ctx.fillStyle ='#F88379';
@@ -246,5 +254,13 @@ function reset(){
 }
 requestAnimationFrame(loop);
 </script>
+<audio id="1" src="../music/BigShot.mp3"></audio>
+<button onclick="document.getElementById('1').play()">
+  Play
+</button>
+<button onclick="document.getElementById('1').pause()">
+  Pause
+</button>
+
 </body>
 </html>
