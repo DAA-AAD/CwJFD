@@ -36,7 +36,7 @@ addEventListener('keyup', e => { keys[e.code] = false; });
 // Basic world
 const world = {
   gravity: 1800, // px/s^2
-  color: '#87CEEB'
+  color: '#00308F'
   // sky blue=87CEEB
 };
 
@@ -54,40 +54,57 @@ const player = {
 const cam = { x:0, y:0, width: innerWidth, height: innerHeight };
 
 // Platforms
-const minx=640;
-const maxx=900;
+const minx=440;
+const maxx=1100;
 const miny=180;
 const maxy=420;
 let px=Math.floor(Math.random()*(maxx+minx))+100;
 let py=Math.floor(Math.random()*(maxy+miny)-miny);
-console.log(px+' '+'px');
+let px2=Math.floor(Math.random()*(maxx+minx))+100;
+let py2=Math.floor(Math.random()*(maxy+miny)-miny);
+let px3=Math.floor(Math.random()*(maxx+minx))+100;
+let py3=Math.floor(Math.random()*(maxy+miny)-miny);
+console.log(px+px);
+console.log(px3+px);
+console.log(px2+px);
+console.log(Math.ceil((px+px2+px3)/3) +'px_average')
+//XRange=100-1640(1540) YRange=-180-700(880)
 let platforms = [
     {x:-10, y:400, w:210,h:28},
   {x: 420, y: 300, w: 220, h: 28},
   {x: 420, y: 180, w: 180, h: 28},
   {x: px, y: py, w: 300, h: 28},
-  {x: px+400, y: py+160, w: 240, h: 28},
-  {x: px+700, y: py+100, w: 200, h: 28},
+  {x: px2, y: py2, w: 240, h: 28},
+  {x: px3, y: py3, w: 200, h: 28},
   {x: 2200, y: 420, w: 800, h: 48}
 ];
-
+console.log(1540*880*1540*900*1100*120 +' '+'generation combos');//combos=247,936,550,400,000,000 quadrillions
 // Moving platforms
 const movingPlat = [
   {x: 420, y: 230, w: 180, h: 28, baseX:420, range:80, speed: 40},
   {x: px+300, y: py+200, w: 180, h: 28, baseX:px+300, range:150, speed: 80},
-  {x: px+500, y: py+80, w: 200, h: 28, baseX:px+500, range:180, speed: 90},
-  {x: px+700, y: py+120, w: 160, h: 28, baseY:300, range:80, speed:60, vertical:true}
+  {x: px2+300, y: py2+80, w: 200, h: 28, baseX:px+500, range:180, speed: 90},
+  {x: px3+300, y: py3+120, w: 160, h: 28, baseY:300, range:80, speed:60, vertical:true}
 ];
+//XRange=400-1940(1540) YRange=0-900(900)
 for (const mp of movingPlat) platforms.push(mp);
-let cx=[px+150,px+350,px+550,px+250];
-console.log(cx+' '+'cx');
+let cx=Math.floor((Math.random()*1100)+400);
+let cx2=Math.floor((Math.random()*1100)+400);
+let cx1=Math.floor((Math.random()*1100)+400);
+let cx3=Math.floor((Math.random()*1100)+400);
+console.log(cx+cx);
+console.log(cx1+cx);
+console.log(cx2+cx);
+console.log(cx3+cx);
+console.log(Math.ceil((cx+cx1+cx2+cx3)/4) +'cx_average')
+//XCoinRange=400-1500(1100) YCoinRange=-200- -80(120)
 //coins
 let coins = [
   {x:450,y:290,r:8, picked:false},
-  {x:cx[3],y:py-50,r:16, picked:false},
-  {x:cx[0],y:py+100,r:16, picked:false},
-  {x:cx[1],y:py-20,r:16, picked:false},
-  {x:cx[2],y:py+20,r:16, picked:false}
+  {x:cx,y:py-50,r:16, picked:false},
+  {x:cx1,y:py+100,r:16, picked:false},
+  {x:cx2,y:py-20,r:16, picked:false},
+  {x:cx3,y:py+20,r:16, picked:false}
 ];
 //max=3880  2200+1680
 let score = 0;
@@ -182,7 +199,7 @@ function draw(){
   // ground/tiles
   ctx.fillStyle = '#2f6f44';
   for(const p of platforms){
-    ctx.fillStyle = (p === movingPlat) ? '#8b5cf6' : '#2f6f44';
+    ctx.fillStyle ='#F88379';
     ctx.fillRect(p.x, p.y, p.w, p.h);
   }
 
