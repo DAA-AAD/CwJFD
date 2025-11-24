@@ -45,7 +45,7 @@ const player = {
   vx: 0, vy: 0,
   speed: 360, jump: 520,
   onGround: false,
-  color: '#000000'
+  color: '#FF0000'
 };
 
 // Camera
@@ -171,12 +171,19 @@ for (const mp of movingPlat) {
   }
 }
 
+if (Math.floor(Math.random()*2)===2){
+  let playercam=Math.floor(Math.random()*240)
+}
+else if(Math.floor(Math.random()*2)===1)
+{let playercam=Math.floor(Math.random()*-240)}
+
 function updateCam(){
-  const targetX = player.x + player.w/2 - canvas.width/(2*DPR) + 120;
+  const targetX = player.x + player.w/2 - canvas.width/(DPR)+20;
    const targetY=player.y+player.w/2-canvas.height/(2*DPR)+120;
-  cam.x += (targetX - cam.x) * 0.12;
+  cam.x +=((targetX - cam.x) * 0.12)+playercam;
   cam.y += (targetY-cam.y)*0.12;
 }
+
 
 function draw(){
   ctx.fillStyle = world.color;
