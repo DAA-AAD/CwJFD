@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fuck you</title>
+  <style>
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+    #game{display:block;background:#87CEEB;width:100vw;height:100vh}
+    .hint{position:absolute;left:12px;top:12px;background:rgba(255, 255, 255, 0.85);padding:8px;border-radius:8px}
+  </style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div class="hint">wasd + arrow keys</div>
+
+<script>
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+let DPR = Math.max(1, window.devicePixelRatio || 1);
+function resize(){
+  canvas.width = innerWidth * DPR;
+  canvas.height = innerHeight * DPR;
+  canvas.style.width = innerWidth + 'px';
+  canvas.style.height = innerHeight + 'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+addEventListener('resize', resize);
+resize();
+
+// Input
+const keys = {};
+addEventListener('keydown', e => { keys[e.code] = true; if(e.code==='Space') e.preventDefault(); });
+addEventListener('keyup', e => { keys[e.code] = false; });
+
+// Basic world
+const world = {
+  gravity: 1800, // px/s^2
+  color: '#000000'//sky blue
+};
+
+// Player
+const player = {
+  x: 80, y: 100, w: 36, h: 48,
+  vx: 0, vy: 0,
+  speed: 360, jump: 520,
+  onGround: false,
+  color: '#000000'
+};
+
+// Camera
+const cam = { x:0, y:0, width: innerWidth, height: innerHeight };
+
+// Platforms
+const minx=440;
+const maxx=1100;
+const miny=180;
+const maxy=420;
+let px=Math.floor(Math.random()*(maxx+minx))+100;
+let py=Math.floor(Math.random()*(maxy+miny)-miny);
+let px2=Math.floor(Math.random()*(maxx+minx))+100;
+let py2=Math.floor(Math.random()*(maxy+miny)-miny);
+let px3=Math.floor(Math.random()*(maxx+minx))+100;
+let py3=Math.floor(Math.random()*(maxy+miny)-miny);
+console.log(Math.ceil((px+px2+px3)/3) +'px_average')
+
+let platforms = [
+    {x:-10, y:400, w:210,h:28},
+  {x: 420, y: 300, w: 220, h: 28},
+  {x: 420, y: 180, w: 180, h: 28},
+  {x: px, y: py, w: 300, h: 28},
+  {x: px2, y: py2, w: 240, h: 28},
+  {x: px3, y: py3, w: 200, h: 28},
+  {x: 2200, y: 420, w: 800, h: 48},
+];
+// Moving platforms
+const movingPlat = [
+  {x: 420, y: 230, w: 180, h: 28, baseX:420, range:80, speed: 100},
+  {x: px+300, y: py+200, w: 180, h: 28, baseX:px+300, range:150, speed: 100},
+  {x: px2+300, y: py2+80, w: 200, h: 28, baseX:px+500, range:180, speed: 100},
+  {x: px3+300, y: py3+120, w: 160, h: 28, baseY:300, range:80, speed:100, vertical:true}
+];
+for (const mp of movingPlat) platforms.push(mp);
+
+let cx=Math.floor((Math.random()*1100)+400);
+let cx2=Math.floor((Math.random()*1100)+400);
+let cx1=Math.floor((Math.random()*1100)+400);
+let cx3=Math.floor((Math.random()*1100)+400);
+console.log(Math.ceil((cx+cx1+cx2+cx3)/4) +'cx_average')
+//XCoinRange=400-1500(1100) YCoinRange=-200- -80(120)
+//coins
+let coins = [
+  {x:450,y:290,r:1, picked:false},
+  {x:cx,y:py-50,r:1, picked:false},
+  {x:cx1,y:py-100,r:1, picked:false},
+  {x:cx2,y:py3-20,r:1, picked:false},
+  {x:cx3,y:py2-40,r:1, picked:false}
+];
+
+let score = 0;
+let last = performance.now();
+
+function rectsIntersect(a,b){
+  return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+}
+
+function physics(dt){
+ // update moving platforms
+for (const mp of movingPlat) {
+  const t = performance.now() / 1000 * mp.speed / 20;
+  if (mp.vertical)
+    mp.y = mp.baseY + Math.sin(t) * mp.range;
+  else
+    mp.x = mp.baseX + Math.sin(t) * mp.range;
+}
+
+  // input
+  let dir = 0;
+  if(keys['ArrowLeft']||keys['KeyA']) dir -= 1.5;
+  if(keys['ArrowRight']||keys['KeyD']) dir += 1.5;
+  const accel = player.speed;
+  player.vx = dir * accel;
+
+  // jump
+  if((keys['ArrowUp']||keys['Space']||keys['KeyW']) && player.onGround){ player.vy = -player.jump; player.onGround = false; }
+
+  // gravity
+  player.vy += (world.gravity * dt) - 18;
+
+  // horizontal movement
+  player.x += player.vx * dt;
+  // horizontal collisions
+  for(const p of platforms){
+    if(rectsIntersect(player, p)){
+      if(player.vx > 0) player.x = p.x - player.w; else if(player.vx < 0) player.x = p.x + p.w;
+      player.vx = 0;
+    }
+  }
+
+  // vertical
+  player.y += player.vy * dt;
+  player.onGround = false;
+
+  for(const p of platforms){
+    if(rectsIntersect(player, p)){
+      if(player.vy > 0){ //land on top of platforms
+        player.y = p.y - player.h;
+        player.vy = 0;
+        player.onGround = true;
+      } else if(player.vy < 0){ // hitting head
+        player.y = p.y + p.h;
+        player.vy = 0;
+      }
+    }
+  }
+
+  // coin pickup
+  for(const c of coins){
+    if(!c.picked){
+      const dx = (player.x + player.w/2) - c.x;
+      const dy = (player.y + player.h/2) - c.y;
+      if(Math.hypot(dx,dy) < c.r + Math.max(player.w,player.h)/2 ){
+        c.picked = true; score += 1;
+      }
+    }
+  }
+
+  //pit
+  if(player.y > 1500){
+    reset();
+  }
+}
+
+function updateCam(){
+  const targetX = player.x + player.w/2 - canvas.width/(2*DPR) + 120;
+   const targetY=player.y+player.w/2-canvas.height/(2*DPR)+120;
+  cam.x += (targetX - cam.x) * 0.12;
+  cam.y += (targetY-cam.y)*0.12;
+}
+
+function draw(){
+  ctx.fillStyle = world.color;
+  ctx.fillRect(0,0,canvas.width/DPR,canvas.height/DPR);
+
+  ctx.save();
+  ctx.translate(-cam.x, -cam.y);
+
+  // ground
+  ctx.fillStyle = '#2f6f44';
+  for(const p of platforms){
+    ctx.fillStyle ='#8b5cf6';
+    ctx.fillRect(p.x, p.y, p.w, p.h);
+  }
+
+  // coins
+  for(const c of coins){
+    if(c.picked) continue;
+    ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, Math.PI*2); ctx.fillStyle='#ffd166'; ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.12)'; ctx.stroke();
+  }
+
+  // player
+  ctx.fillStyle = player.color;
+  ctx.fillRect(player.x, player.y, player.w, player.h);
+  
+  // finish line
+  ctx.fillStyle = '#ffb703'; ctx.fillRect(2500, 360-120, 12, 120);
+
+  ctx.restore();
+
+  // HUD
+  ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(12,canvas.height/DPR-48,160,36);
+  ctx.fillStyle = '#fff'; ctx.font = '16px system-ui'; ctx.fillText('Score: ' + score, 22, canvas.height/DPR-22);
+}
+
+function loop(now){
+  const dt = Math.min(0.033, (now - last)/1000);
+  last = now;
+  physics(dt);
+  updateCam();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+function reset(){
+  player.x = 80; player.y = 100; player.vx = 0; player.vy = 0; score = 0;
+  coins.forEach(c => c.picked = false);
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
