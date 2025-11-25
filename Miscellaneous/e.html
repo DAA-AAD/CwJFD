@@ -34,13 +34,17 @@ resize();
 
 let bgImg = new Image();
 // Global State
+
+let playerSprite = new Image();
+playerSprite.src ='../platformers/PlayerDesign.png'
+
 const player = {
-  x:80, y:100, w:36, h:48,
+  x:80, y:100, w:60, h:58,
   vx:0, vy:0,
   speed:360,
-  jump:Math.floor(Math.random()*9999),
+  jump:560,
   onGround:false,
-  color:bgImg
+  color:'#00308F'
 };
 
 const world = {
@@ -258,18 +262,14 @@ function draw(){
     ctx.strokeStyle='rgba(0,0,0,0.12)';
     ctx.stroke();
   }
-
-  // Player
+//player
+  if (playerSprite.complete) {
+  ctx.drawImage(playerSprite, player.x, player.y, player.w, player.h);
+} else{
+  //just in case
   ctx.fillStyle = player.color;
-  ctx.fillRect(player.x,player.y,player.w,player.h);
-
-  // Eyes
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(player.x - 18, player.y - 14, 30, 30);
-  ctx.fillRect(player.x + 22, player.y - 14, 30, 30);
-  ctx.fillStyle = '#ff0000';
-  ctx.fillRect(player.x - 8, player.y - 10, 15, 15);
-  ctx.fillRect(player.x +32, player.y - 10, 15, 15);
+  ctx.fillRect(player.x, player.y, player.w, player.h);
+}
 
   // Finish line
   ctx.fillStyle = '#ffb703';

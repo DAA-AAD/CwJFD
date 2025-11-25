@@ -14,7 +14,7 @@
 
 <body>
 <canvas id="game"></canvas>
-<div class="hint">WASD / Arrow Keys — Press R to regenerate</div>
+<div class="hint">WASD / Arrow Keys — R for new level| K=kys</div>
 
 <script>
 // Canvas Setup
@@ -173,6 +173,8 @@ function physics(dt){
     player.vy = -player.jump;
     player.onGround = false;
   }
+
+if(keys['KeyK']){reset()}
 
   // Gravity
   player.vy += (world.gravity * dt) - 18;

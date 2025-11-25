@@ -12,7 +12,7 @@
 </head>
 <body>
 <canvas id="game"></canvas>
-<div class="hint">wasd + arrow keys</div>
+<div class="hint">wasd + arrow keys | K=kys</div>
 
 <script>
 const canvas = document.getElementById('game');
@@ -43,7 +43,7 @@ const world = {
 const player = {
   x: 80, y: 100, w: 36, h: 48,
   vx: 0, vy: 0,
-  speed: 360, jump: 520,
+  speed: Math.floor(Math.random()*720), jump: Math.floor(Math.random()*700),
   onGround: false,
   color: '#FF0000'
 };
@@ -124,6 +124,8 @@ for (const mp of movingPlat) {
   // jump
   if((keys['ArrowUp']||keys['Space']||keys['KeyW']) && player.onGround){ player.vy = -player.jump; player.onGround = false; }
 
+if(keys['KeyK']){reset()}
+
   // gravity
   player.vy += (world.gravity * dt) - 18;
 
@@ -171,16 +173,10 @@ for (const mp of movingPlat) {
   }
 }
 
-if (Math.floor(Math.random()*2)===2){
-  let playercam=Math.floor(Math.random()*240)
-}
-else if(Math.floor(Math.random()*2)===1)
-{let playercam=Math.floor(Math.random()*-240)}
-
 function updateCam(){
   const targetX = player.x + player.w/2 - canvas.width/(DPR)+20;
    const targetY=player.y+player.w/2-canvas.height/(2*DPR)+120;
-  cam.x +=((targetX - cam.x) * 0.12)+playercam;
+  cam.x +=((targetX - cam.x) * 0.12)+120;
   cam.y += (targetY-cam.y)*0.12;
 }
 
