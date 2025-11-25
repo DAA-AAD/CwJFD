@@ -32,12 +32,22 @@ function resize() {
 addEventListener('resize', resize);
 resize();
 
+const a =Math.floor(Math.random() * 5);
+  const Sprite=[
+    "../pictures/TvTime.png",
+    "../pictures/Stitch.png",
+    "../pictures/Alastor.png",
+    "../pictures/Asriel_PFP_Git.png",
+    "../pictures/Cyn.png"];
+let playerSprite= new Image();
+playerSprite.src =Sprite[a]
+
 // Global Game State
 const player = {
   x:80, y:100, w:36, h:48,
   vx:0, vy:0,
   speed:360,
-  jump:520,
+  jump:620,
   onGround:false,
   color:'#ff6b6b'
 };
@@ -261,8 +271,8 @@ function draw(){
   }
 
   // Player
-  ctx.fillStyle = player.color;
-  ctx.fillRect(player.x,player.y,player.w,player.h);
+  if (playerSprite.complete) {
+  ctx.drawImage(playerSprite, player.x, player.y, player.w, player.h);}
 
   // Eyes
   ctx.fillStyle = '#fff';
