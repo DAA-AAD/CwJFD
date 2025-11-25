@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pikshurs</title>
+</head>
+<body style="background-color: black;">
+    <script>
+        const newImage = new Image();
+newImage.src = "alastor.png";
+newImage.onload= () => {
+    console.log(':)');
+};
+newImage.onerror= () => {
+    console.log(':(');
+};
+const newImage2= new Image();
+newImage2.src="cyn.png";
+const newImage3= new Image();
+newImage3.src="Asriel_PFP_Git.png";
+const newImage4= new Image();
+newImage4.src="Stitch.png";
+const newImage5= new Image();
+newImage5.src="TvTime.png";
+document.body.appendChild(newImage);
+document.body.appendChild(newImage2);
+document.body.appendChild(newImage3);
+document.body.appendChild(newImage4);
+document.body.appendChild(newImage5);
+    </script>
+</body>
+</html>

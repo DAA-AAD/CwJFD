@@ -3,16 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mom platformer</title>
+  <title>Mom Friendly</title>
   <style>
     html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
     #game{display:block;background:#87CEEB;width:100vw;height:100vh}
     .hint{position:absolute;left:12px;top:12px;background:rgba(255, 255, 255, 0.85);padding:8px;border-radius:8px}
+    .hint2{position:absolute;right:12px;top:12px;background:rgba(255, 255, 255, 0.85);padding:8px;border-radius:8px}
   </style>
 </head>
 <body>
 <canvas id="game"></canvas>
 <div class="hint">wasd + arrow keys| K=giv up</div>
+<div class="hint2">Git Gud</div>
 
 <script>
 const canvas = document.getElementById('game');
@@ -25,13 +27,13 @@ function resize(){
   canvas.style.height = innerHeight + 'px';
   ctx.setTransform(DPR,0,0,DPR,0,0);
 }
+//Background picture
 const bgImg = new Image();
 if(4<Math.floor(Math.random()*5)<5){bgImg.src = "../pictures/Cyn.png";}
 if(Math.floor(Math.random()*5)===3){bgImg.src = "../pictures/Asriel_PFP_Git.png";}
 if(Math.floor(Math.random()*5)===2){bgImg.src = "../pictures/Alastor.png";}
 if(Math.floor(Math.random()*5)===1){bgImg.src = "../pictures/Stitch.png";}
 if(Math.floor(Math.random()*5)===0){bgImg.src = "../pictures/TvTime.png";}
-if(Math.floor(Math.random()*5)===4){bgImg.src = "PlayerDesign.png";}
 
 addEventListener ('resize', resize);
 resize();
@@ -47,17 +49,17 @@ const world = {
   color: '#00308F'
   // sky blue=87CEEB
 };
-let age= prompt('age?')
-if(age>43){
-  alert('you\'re old')
-}else if(13>age){
-  let age=31
-}
+//let age= prompt('age?')
+//if(age>43){
+  //alert('you\'re old')
+//}else if(13>age){
+  //let age=31
+//}
 // Player
 const player = {
   x: 80, y: 100, w: 36, h: 48,
   vx: 0, vy: 0,
-  speed: 200, jump:2200/(age/10),
+  speed: 200, jump:910/(13/10),
   onGround: false,
   color: '#ff6b6b'
   //Persimmon /\ color

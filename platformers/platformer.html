@@ -6,15 +6,17 @@
   <title>platformer</title>
 
   <style>
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial}
     #game{display:block;background:#87CEEB;width:100vw;height:100vh}
     .hint{position:absolute;left:12px;top:12px;background:rgba(255, 255, 255, 0.85);padding:8px;border-radius:8px}
+    .hint2{position:absolute;right:12px;top:12px;background:rgba(255, 255, 255, 0.85);padding:8px;border-radius:8px}
   </style>
 </head>
 
 <body>
 <canvas id="game"></canvas>
 <div class="hint">WASD / Arrow Keys — R for new level| K=kys</div>
+<div class="hint2">Reach the goal</div>
 
 <script>
 // Canvas Setup
@@ -68,7 +70,7 @@ const cam = { x:0, y:0 };
 // Generate Level
 function level() {
 
-  // Random background
+  //background picture
   const r = Math.floor(Math.random() * 6);
   const backgrounds = [
     "../pictures/TvTime.png",
@@ -315,7 +317,7 @@ function loop(now){
 level();
 requestAnimationFrame(loop);
 </script>
-
+<h3>We're aware of background 6 being annoying but it is FUNNY so we're keeping it</h3>
 <!--audio-->
 <audio id="mus" src="../music/LetMeIn1hr.mp3"></audio>
 
