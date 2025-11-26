@@ -41,8 +41,12 @@ const Dave={x:0,y:338,w:100,h:100};
 
 //cheese
 const chezimg=new Image();
-chezimg.src='../pictures/chez.png';
-const chez={x:300,y:338,h:50,w:50};
+chezimg.src='../pictures/cheza.png';
+let chezs=0;
+const chez={x:Dave.x-50,y:Dave.y+25,h:50,w:50};
+const chez2={x:chez.x-50,y:Dave.y+50,h:50,w:50};
+const chez3={x:chez2.x-50,y:Dave.y-25,h:50,w:50};
+const chez4={x:chez3.x-50,y:Dave.y+50,h:50,w:50};
 
 function loop() {
     //background
@@ -54,10 +58,25 @@ function loop() {
         ctx.drawImage(DaveImg, Dave.x, Dave.y, Dave.w, Dave.h);
     }
     //chez
-    if(chez.complete){
+    chezs+=0.05;//cheese speed
+    let chesanimateUp=(Math.sin(chezs))*50;
+    let chesanimateDown=(Math.sin(chezs))*-50;
+    if(chezimg.complete){
      ctx.drawImage(chezimg,chez.x,chez.y,chez.w,chez.h)
     }
+    if(chezimg.complete){ctx.drawImage(chezimg,chez2.x,chez2.y,chez2.w,chez2.h)}
+    if(chezimg.complete){ctx.drawImage(chezimg,chez3.x,chez3.y,chez3.w,chez3.h)}
+    if(chezimg.complete){ctx.drawImage(chezimg,chez4.x,chez4.y,chez4.w,chez4.h)}
     Dave.x=Dave.x+3;
+    chez.x=Dave.x-50;
+    chez.y=Dave.y+25+chesanimateUp;
+    chez2.y=Dave.y+50+chesanimateDown;
+    chez2.x=chez.x-50;
+    chez3.x=chez2.x-50;
+    chez3.y=Dave.y+25+chesanimateUp;
+    chez4.x=chez3.x-50;
+    chez4.y=Dave.y+50+chesanimateDown;
+
     if(Dave.x>1380){Dave.x=0;Dave.y=Math.ceil(Math.random()*675)}
     requestAnimationFrame(loop);
 }

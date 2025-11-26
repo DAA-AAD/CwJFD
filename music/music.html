@@ -5,7 +5,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>cylly</title>
 </head>
-<body>
+<body style="background-color: rgb(150, 0, 153);">
  <h3>Let Me in</h3>
 <audio id='1' src='LetMeIn1hr.mp3'></audio>
 <button onclick="document.getElementById('1').play()">
@@ -41,6 +41,11 @@
 <button onclick="document.getElementById('4').pause()">
   Pause
 </button>
+
+<h3>Spider Dance(vocaloid)</h3>
+<audio id="5" src="SpiderDanceVocaloid.mp3"></audio>
+<button onclick="document.getElementById('5').play()">Play</button>
+<button onclick="document.getElementById('5').pause()">Pause</button>
 <h3>ALL IN 1</h3>
 
 <script>
@@ -56,21 +61,21 @@ function pauseAll() {
   audios.forEach(a => a.pause());
 }
 function randomPlay(){
-let random=Math.floor(Math.random()*4);document.getElementById(random).play()
+let random=Math.floor(Math.random()*6);document.getElementById(random).play()
 
 }
 function randomPause(){
-let random=Math.floor(Math.random()*4);document.getElementById(random).pause()
+let random=Math.floor(Math.random()*6);document.getElementById(random).pause()
 }
 </script>
 <div id="all"><!--audio list-->
   <audio src="BigShot.mp3"></audio><audio src="LetMeIn1hr.mp3"></audio><audio src="BiteMe1hr.mp3"></audio>
-  <audio src='TvTime.mp3'></audio>
+  <audio src='TvTime.mp3'></audio><audio src="SpiderDanceVocaloid.mp3"></audio>
 </div>
 <button  onclick='playAll()'>Play All</button>
 <button onclick="pauseAll()">Pause All</button>
 
-<h3>Random(80% success rate)</h3>
+<h3>Random(87% success rate)</h3>
 <button onclick="randomPlay()">play random</button>
 <button onclick="randomPause()">pause random</button>
 </body>
