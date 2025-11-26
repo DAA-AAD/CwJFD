@@ -3,11 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CHEEEEESE</title>
+    
+  <style>
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial}
+    #game{display:block;background:#faeeaa;width:100vw;height:100vh}
+    .hint{position:absolute;left:12px;top:12px;background:rgba(255, 255, 255, 0.85);padding:8px;border-radius:8px}
+    </style>
 </head>
 <body>
-    <script>
-        function draw(){}
+<canvas id="game"></canvas>
+<div class="hint">CHEESE</div>
+
+<script>
+//background image
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+let DPR=Math.max(1,window.devicePixelRatio||1);
+function resize() {
+  canvas.width  = innerWidth * DPR;
+  canvas.height = innerHeight * DPR;
+  canvas.style.width  = innerWidth;
+  canvas.style.height = innerHeight;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+//background
+addEventListener('resize', resize);
+resize();
+const bg=new Image();
+bg.src='../pictures/chez.png';
+bg.onload=function(){draw();};
+
+//Dave
+const DaveImg=new Image();
+DaveImg.src='../pictures/dave.png';
+const Dave={x:0,y:338,w:100,h:100};
+
+//cheese
+const chezimg=new Image();
+chezimg.src='../pictures/chez.png';
+const chez={x:300,y:338,h:50,w:50};
+
+function loop() {
+    //background
+    if (bg.complete) {
+        ctx.drawImage(bg, 0, 0, canvas.width / DPR, canvas.height / DPR);
+    }
+    //Dave
+    if (DaveImg.complete) {
+        ctx.drawImage(DaveImg, Dave.x, Dave.y, Dave.w, Dave.h);
+    }
+    //chez
+    if(chez.complete){
+     ctx.drawImage(chezimg,chez.x,chez.y,chez.w,chez.h)
+    }
+    Dave.x=Dave.x+3;
+    if(Dave.x>1380){Dave.x=0;Dave.y=Math.ceil(Math.random()*675)}
+    requestAnimationFrame(loop);
+}
+bg.onload =DaveImg.onload=chezimg.onload=loop;
     </script>
 </body>
 </html>
