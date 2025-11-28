@@ -46,8 +46,18 @@
 <audio id="5" src="SpiderDanceVocaloid.mp3"></audio>
 <button onclick="document.getElementById('5').play()">Play</button>
 <button onclick="document.getElementById('5').pause()">Pause</button>
-<h3>ALL IN 1</h3>
 
+<h3>Static</h3>
+<audio id="6" src="StaticMiku.mp3"></audio>
+<button onclick="document.getElementById('6').play()">Play</button>
+<button onclick="document.getElementById('6').pause()">Pause</button>
+
+<h3>Don't touch that Dial!</h3>
+<audio id="7" src="DontTouchThatDial.mp3"></audio>
+<button onclick="document.getElementById('7').play()">Play</button>
+<button onclick="document.getElementById('7').pause()">Pause</button>
+<!--add more from here-->
+<h3>ALL IN 1</h3>
 <script>
 function playAll() {
   const audios = document.querySelectorAll('#all audio');
@@ -61,21 +71,22 @@ function pauseAll() {
   audios.forEach(a => a.pause());
 }
 function randomPlay(){
-let random=Math.floor(Math.random()*6);document.getElementById(random).play()
+let random=Math.floor(Math.random()*8);document.getElementById(random).play()
 
 }
 function randomPause(){
-let random=Math.floor(Math.random()*6);document.getElementById(random).pause()
+let random=Math.floor(Math.random()*8);document.getElementById(random).pause()
 }
 </script>
 <div id="all"><!--audio list-->
   <audio src="BigShot.mp3"></audio><audio src="LetMeIn1hr.mp3"></audio><audio src="BiteMe1hr.mp3"></audio>
-  <audio src='TvTime.mp3'></audio><audio src="SpiderDanceVocaloid.mp3"></audio>
+  <audio src='TvTime.mp3'></audio><audio src="SpiderDanceVocaloid.mp3"></audio><audio src="StaticMiku.mp3">
+  </audio><audio src="DontTouchThatDial.mp3"></audio>
 </div>
 <button  onclick='playAll()'>Play All</button>
 <button onclick="pauseAll()">Pause All</button>
 
-<h3>Random(87% success rate)</h3>
+<h3>Random(87.5% success rate)</h3>
 <button onclick="randomPlay()">play random</button>
 <button onclick="randomPause()">pause random</button>
 </body>

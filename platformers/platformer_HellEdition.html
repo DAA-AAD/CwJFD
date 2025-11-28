@@ -33,17 +33,23 @@ const keys = {};
 addEventListener('keydown', e => { keys[e.code] = true; if(e.code==='Space') e.preventDefault(); });
 addEventListener('keyup', e => { keys[e.code] = false; });
 
-// Basic world
+//world
 const world = {
   gravity: 1800, // px/s^2
   color: '#000000'//sky blue
 };
 
+const DaveImg=new Image();
+DaveImg.src='../pictures/dave.png';
+const Dave={x:0,y:338,w:100,h:100};
+
+let sped= Math.floor(Math.random()*720);
+let jmp=Math.floor(Math.random()*700);
 // Player
-const player = {
+let player = {
   x: 80, y: 100, w: 36, h: 48,
   vx: 0, vy: 0,
-  speed: Math.floor(Math.random()*720), jump: Math.floor(Math.random()*700),
+  speed:sped, jump:jmp,
   onGround: false,
   color: '#FF0000'
 };
@@ -222,6 +228,12 @@ function loop(now){
   physics(dt);
   updateCam();
   draw();
+
+if (DaveImg.complete) {
+        ctx.drawImage(DaveImg, Dave.x, Dave.y, Dave.w, Dave.h);
+    }
+    Dave.x=Dave.x+4
+    if(Dave.x>(player.x+1000)){Dave.x=(player.x-1000);Dave.y=Math.ceil(Math.random()*500)}
   requestAnimationFrame(loop);
 }
 
