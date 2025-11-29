@@ -1,6 +1,11 @@
+11/28/2025
+I have for the most part completed my reference guide to HTML and have updated the tab name for the ball game and made it more
+storage friendly Note: haven't updated everything yet but I might tomorrow. If I remember to commit instead of waiting 5 years
+-I also might have editted the wording of the last commit but it's the same
+
 11/27/2025
 I will be putting info for commits here now and just say reference
-here now old stuff will be farther down like this one :)
+here; now old stuff will be farther down like this one :) + this is easier and feels nice
 
 New Cheese lord design, integrated Dave into Hell platformer, updated pictures.html,
 new mp3s

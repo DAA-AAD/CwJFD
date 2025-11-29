@@ -11,7 +11,6 @@ Basic Ball Program made following instructions from J.FD
 
 ```html
 <div id="ball">@</div>
-<script src= "BallGame.js"/>
 ```
 
 2. Script will detect key presses to make the ball move(left/right arrows)

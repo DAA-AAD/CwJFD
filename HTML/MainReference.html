@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML reference(pg 1)</title>
+</head>
+<body style="background-color: rgb(0, 106, 55);"><!--the style here allows the background of the body
+    to be this color instead of the default white | this makes the whole page this color even if not all the text
+    elements are in it since it covers the whole screen-->
+    This is body text | copy this -> HD13eq_Pmp8   0.54.21
+</body>
+<h1>this is the biggest header | and the start of this reference guide</h1>
+<h2>smaller</h2>
+<h3>smaller</h3>
+<h4>yet smaller</h4>
+<h5>the small keeps growing</h5>
+<h6>Wait NO! go back!</h6>
+<h6 style="font-size: 1;color: rgb(0, 106, 55);">Teeny</h6><!--over here you
+can see how I
+made the text even smaller and invisible by making it the same color as the background-->
+<h6>line break ahead</h6>
+<br><!--line break right here-->
+
+<p>this is a paragraph</p>
+<p>you can also type Lorem and press Tab after to get sample text like over here   Lorem ipsum dolor sit, amet consectet
+  ur adipisicing elit. Nihil, deserunt, impedit eum doloribus ab nulla accusantium beatae voluptates expedita voluptas mo
+  lestiae hic. Fugit rerum, at quas praesentium asperiores maiores ut!</p>
+  <hr><!--this makes a line -->
+
+<h1>Links</h1>
+<a href="https://www.youtube.com/watch?v=KlTNKOnfXFk&list=RDKlTNKOnfXFk&start_radio=1" target="_blank" style="color:
+rgb(51, 0, 255);" title="Miku" >Static</a>
+<!--use the 'a' tag for links and put the link in the href='' and you can change the text in between open/close tag
+the target="_blank"   makes it open a new tab for the link  if you make it _self then it will replace the tab you
+clicked the link from | also the default target is _self-->
+<br><!--also the link kinda dies if you close this file so keep this open while running the link-->
+
+<a href="FileLink.html" target="_self" style="color:rgb(51,0,255)">File link</a><!--as you can tell this link targets your tab
+instead of a new one you can also put files as the link like the one here-->
+<br>
+<a href="mailto:[insertExampleHere]">Don't ever touch this link</a> <!--ok this is creepy and will never be touched but you can send
+mail with this-->
+<br><br>
+
+<h1>Images</h1>
+<img src="../pictures/Cyn.png"><!--over here you can see an image which takes the src to find and puts it here-->
+<br>
+<img src="../pictures/Alastor.png" width="600" height="200"><!--you can also change the size of the picture like the one here
+note: if you only have one size stated then it will scale proportionately-->
+<!--oh and also this is what it looks like if it fails to load--><img src="oogaboogabooga"><br>
+
+<img src="../pictures/dave.png" alt="DAVE" title="The Magical Cheese Wizard" width="300"><!--alt makes text appear before the picture
+loads or if the picture fails to load |  the title just displays text when you have your cursor touching the picture-->
+
+<a href="https://en.wikipedia.org/wiki/Cheese" target="_blank"><img src='../pictures/LordChez.png'><!--you can also make pictures into
+  links; spooky!-->
+</a>
+<br><br>
+
+<h1>mp3/audio</h1>
+<audio controls loop muted src="../music/DontTouchThatDial.mp3">Don't touch that Dial!</audio><!--this takes the mp3 and plays
+it | the controls makes it so you have control over it as if it was a mp3 player| you can also connect audio to buttons which are
+discussed late | loop/muted do precisely what they say and can be removed if you don't want them--><br>
+<audio controls>
+  <source src="../music/StaticMiku.mp3"><source src="../music/LetMeIn1hr.mp3">this page doesn't want you to hear this FIRE music
+</audio><!--this audio goes through the list which can be useful if a browser doesn't support that file and you can also add text-->
+<br><br>
+
+<h1>Mp4/Video</h1>
+<video controls loop src="../video/TennaDancing.mp4"></video><!--over here is a mp4 which can use all the same things as the mp3
+except IN VIDEO | remember that source list from the mp3s? well you can do the same thing with the mp4-->
+<br><br>
+
+<h1>Text Types</h1>
+normal text<br><br>
+<b>bold text</b><br><br>
+<i>itaic text</i><br><br>
+<big>big</big> text<br><br>
+<small>small</small> text<br><br>
+This is a<sub>subscript</sub>.<br><br>
+This is a<sup>superscript</sup>>.<br><br><!--funny on every level-->
+<ins>underlined text | inserted text</ins><br><br><!--literally just underlines the text-->
+<del>crossed out text | deleted text</del><br><br><!--how do I know how to do this with html and not with Google Docs!-->
+<mark>marked out text | highlighted text</mark><br><br><!--yellow by default-->
+
+<h1>Lists</h1>
+<h4>Unordered list</h4><!--uses bullet points-->
+<ul>
+ <li>S</li>
+ <li>t</li>
+  <li>e</li>
+  <li>v</li>
+  <li>e</li>
+ <li>'</li>
+  <li>s</li>
+  <li>L</li>
+  <li>a</li>
+  <li>v</li>
+  <li>a</li>
+  <li>C</li>
+  <li>h</li>
+  <li>i</li>
+ <li>c</li>
+ <li>k</li>
+  <li>e</li>
+  <li>n</li><!--you need to have an 'li' tag for each item in the list-->
+</ul>
+<h4>Ordered list</h4><!--uses numbers by default-->
+<ol>
+ <li>A</li>
+  <li>B</li>
+ <li>C</li>
+ <li>sing with me</li>
+</ol><br>
+<ol type="A">
+  <li>this</li>
+  <li>is</li>
+  <li>a</li>
+  <li>list</li>
+</ol><br>
+<ol type="a">
+  <li>this</li>
+  <li>is</li>
+  <li>a</li>
+  <li>list</li>
+</ol><br>
+<ol type="i"><!--never use this one-->
+  <li>this</li>
+  <li>is</li>
+  <li>a</li>
+  <li>list</li>
+</ol><br>
+<ol type="I">
+  <li>this</li>
+  <li>is</li>
+  <li>a</li>
+  <li>list</li>
+</ol>
+<h4>Description List<h4>
+<dl>
+  <dt>Parangaricutirimícuaro</dt><!--term-->
+  <dd>Pa-ran-ga-ri-cu-ti-ri-mi-kwa-ro</dd><!--definition-->
+</dl>
+<h4>List in a List</h4>
+<ul>
+  <li>List
+    <ul><li>in A list</li></ul>
+  </li>
+</ul><!--this works for all list types | you can also go further than this--><br><br>
+
+<h1>table</h1>
+<table bgcolor="black"><!--this can be used for borders-->
+  <tr bgcolor="red" width="900"><!--by default this is blank | if you change the sizes of the top row it effects all rows below it
+    because it's a table-->
+    <th width="100">Chicken</th>
+    <th width="100">Chicken</th>
+    <th width="100">Banana</th>
+    <th width="100">Banana</th>
+    <th width="100">your</th>
+    <th width="100">to</th>
+    <th width="100">a</th>
+    <th width="100">shot</th>
+    <th width="100">!</th><!--this displays text-->
+  </tr><!--these are rows-->
+  <tr bgcolor="yellow" align="center"><!--the align is set to the left by default-->
+<td>Banana</td>
+<td>Banana</td>
+<td>Banana</td>
+<td>Now's</td>
+<td>chance</td>
+<td>be</td>
+<td>big</td>
+<td>!</td>
+<td>!</td>
+  </tr>
+</table><br><br>
+<h1>Color Text</h1>
+<p style="color: red;">text color change!</p><!--if you use the default for 'rgb' then good luck with that you WILL need it-->
+<p style="color:rgb(255,255,255)">Again</p><!--paragraph have a default line break so 'br' isn't needed-->
+<p style="color: #8800ff">go back to red please</p>
+<p style="background-color: black;color: #ff0000;">thank you</p><!--as you can see the background color only effects the paragraph
+element why it doesn't function like the body? IDK look it up if you care so much! It works that is all that matters!--><br><br>
+
+<h1>Span/Div</h1>
+<p>
+  <span style="background-color: yellow;">Lux Tenebris Omnipotenti Omnipotenti</span> Each little spark Burst with light Struggling
+  on Ever to fight The storm of change Fanning the flames Crash no the waves I purify! On that day Forever was banished the night!
+  In the beginning was nothing but night! Each little spark Lost in the dark Crying at shadows to save them And then the darkness and
+  the wind Would let the age of night begin<!--as you can see span can be used to make mini element changes in text and if you remove
+  the closing tag then it would just apply to the whole paragraph element-->
+</p><br>
+<div style="color: #ff0000;background-color: aqua;">
+  <p>as you can see the div basically allows you to apply the things stated from the 'div' element and apply it to everything within</p>
+  <p>it can also be used like a list like shown here <a href="../music/music.html" target="_blank">link</a> where the div element is used
+  </p>
+  <p>for the play all button; and also you'll see how the div here doesn't apply to the link text</p>
+</div><br>
+
+<h1><b>META</b> data</h1><!--data about the data-->
+<a href="Meta.html">look a new link!</a><br>
+
+<h1>iframes</h1><!--can be used to embed stuff from other sources | used in ads and other stuff-->
+<iframe src="https://www.bing.com"></iframe><!--very few websites allow iframes so don't even try those-->
+<iframe src="iframe.html" width="300" height="300"></iframe><!--files can also be used and you can change the size of the iframes too!-->
+<iframe style='border: 0;'src="iframe.html" width="300" height="300"></iframe><!--by default these have borders, you can remove them
+with this... now you may be looking at it and see no difference but trust me there is--><br><br>
+
+<h1>Buttons</h1>
+<a href="button.html">butonns</a><br><br>
+
+<h1>forms</h1><!--self explanatory-->
+<form action="">
+  <div><label for="question1">type in your favorite 49 digit chunk of pi</label>
+  <input type="text" id="question1" name="question1" placeholder="11415926535897932384626433832795028841971693993751"></div>
+<br><div>
+
+<input type="reset"></div>
+
+<div><input type="submit"></div>
+</form>
+</html>

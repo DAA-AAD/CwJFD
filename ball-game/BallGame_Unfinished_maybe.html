@@ -4,11 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Document</title>
+    <title>Ball</title>
 </head>
 <body>
     <div id="ball"></div>
-    <script src="BallGame.js"></script>
+    
+    <script>
+    const ball = document.getElementById('ball');
+document.addEventListener('keydown', handleKeyPress);
+let position=0
+
+function handleKeyPress(e) {
+    if (e.code ==='ArrowLeft') {
+        position = position - 10;
+}
+if (e.code === 'ArrowRight') {
+    position = position + 10;
+}
+if (position < 0) {
+    position = 0;
+}
+refresh();
+}
+function refresh() {
+    ball.style.left = position + 'px';
+}</script>
+<!--ball-->
      <style>
         #ball {
             background-color: black;
