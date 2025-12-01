@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+<body style="background-color: maroon;">
+    <form action="action_page.php" method="POST"><!--use 'GET' for stuff like a searching through the file or something like that
+  for example: searching for stuff on youtube-->
+  <div><label for="question1">type in your favorite 49 digit chunk of pi</label>
+  <input type="text" id="question1" name="question1" placeholder="11415926535897932384626433832795028841971693993751" required
+minlength="49"  ></div>
+
+<div>
+  <label for="pass">Password</label>
+  <input type="password" id="pass" name="pass" maxlength="11" required>
+</div>
+
+<div>
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required placeholder="ThisIs@gmail.com">
+</div>
+
+<div>
+  <label for="phone">Phone number</label>
+  <input type="tel" id="phone" name="phone" required placeholder="+81-191-419-3989">
+</div>
+
+<div>
+  <label for="bday">Bday</label>
+  <input type="date" id="bday" name="bday" required placeholder="1/2/3456"> 
+</div>
+
+<div>
+<label for="numba">numbers</label>
+<input type="number" id="numba" name="numba" required min="1234" max="1234123412" value="12345">
+</div>
+
+<div>
+  <p>QUESTION: Are you paying for premium Google?</p>
+  <label for="Yes">Yes</label>
+  <input type="radio" name="ManyChoice" value="no" id="Yes">
+  <label for="No">No</label>
+  <input type="radio" id='No'name="ManyChoice" value="yes">
+  <label for="YESs">Absolutely</label>
+  <input id='YESs'type="radio" name="ManyChoice" value="no">
+</div>
+
+<div>
+  <label for="select">Drop Down Boxes</label>
+  <select id="select" name="select">
+    <option value="1">Task</option>
+    <option value="2">Manager</option>
+    <option value="3">...</option>
+    <option value="4">Sic</option>
+    <option value="5">'em</option>
+    <option value="6">right</option>
+    <option value="7">now</option>
+  </select>
+</div>
+
+<div>
+  <label for="chek">FNAF?</label>
+  <input type="checkbox" id="chek" name="chek">
+</div>
+<br><input type="reset"></div>
+<div><input type="submit"></div>
+</form>
+</body>
+</html>
