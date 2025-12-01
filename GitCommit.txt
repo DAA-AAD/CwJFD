@@ -1,3 +1,6 @@
+12/1/2025
+Made a general ReadMe for the repository and I literally only renamed a singular folder...
+
 11/30/2025
 All of the HTML reference is finished and updated the picture.html with the .mp4
 11/28/2025
