@@ -1,0 +1,4 @@
+WASD= Main controls
+-diagonal movement self explanatory
+
+other controls explained in-game

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>#game{display:block;background:#b90000;width:100vw;height:100vh}</style>
+    <title>Rainbow friends</title>
+</head>
+<body>
+    <canvas id='game'></canvas>
+<script>//intro placeholder
+    let UserName=prompt('Who has returned here?');
+    alert('Hey'+' '+UserName+'! come here, there\'s free games! just click that button right there');//seller talk start
+    alert('AAAH! this wasn\'t supposed to happen!');//Red talk start
+    alert('Hello young one, It appears I\'m in quite the pickle, help me and I\'ll help you. Huh... what\'s BLUE doing?')
+
+const bg=new Image();
+bg.src='../pictures/introMungus.png';
+bg.onload=function(){images();};
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+let DPR=Math.max(1,window.devicePixelRatio||1);
+function resize() {
+canvas.width  = innerWidth * DPR;
+canvas.height = innerHeight * DPR;
+canvas.style.width  = innerWidth;
+canvas.style.height = innerHeight;
+ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+
+//Screen: width=300, height=150
+
+//player
+let player={x:120,y:75,w:27,h:23}
+const playerSprite=new Image();
+playerSprite.src='../pictures/Player.png';
+playerSprite.onload=function(){images();};
+//'x/440'='y/300'(xPos)
+//'x/290'='y/150'
+
+//enemies
+let enemy=1;
+let blue={x:0,y:5,w:30,h:46};
+const blueSprite=new Image();
+blueSprite.src='../pictures/BlueEnemy.png';
+blueSprite.onload=function(){images();};
+
+//intro seller
+let intro={x:150,y:75,w:48,h:72}
+const IntroSprite=new Image();
+IntroSprite.src='../pictures/Seller.png';
+IntroSprite.onload=function(){images();};
+
+//controls
+
+document.addEventListener('keydown', move);
+let comboKeys={};
+document.addEventListener('keydown',e =>{comboKeys[e.code] = true;} );
+document.addEventListener('keyup',e =>{comboKeys[e.code] = false;} );
+
+function move(e) {
+    if (e.code ==='KeyA') {player.x=player.x-1}//left
+if (e.code === 'KeyD') {player.x=player.x+1}//right
+if(e.code==='KeyW'){player.y=player.y-1}//up
+if(e.code==='KeyS'){player.y=player.y+1}//down
+
+if(comboKeys['KeyW']&&comboKeys['KeyA']){player.x=player.x-1;player.y=player.y-1}//UpLeft
+if(comboKeys['KeyW']&&comboKeys['KeyD']){player.x=player.x+1;player.y=player.y-1}//UpRight
+if(comboKeys['KeyS']&&comboKeys['KeyA']){player.x=player.x-1;player.y=player.y+1}//DownLeft
+if(comboKeys['KeyS']&&comboKeys['KeyD']){player.x=player.x+1;player.y=player.y+1}//DownRight
+}
+
+function images(){
+    if (bg.complete) {ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);}
+    if(playerSprite.complete){ctx.drawImage(playerSprite,player.x,player.y,player.w,player.h)}
+    if(blueSprite.complete){ctx.drawImage(blueSprite,blue.x,blue.y,blue.w,blue.h)}
+    //if(IntroSprite.complete){ctx.drawImage(IntroSprite,intro.x,intro.y,intro.w,intro.h)}
+        requestAnimationFrame(images)}
+    </script>
+</body>
+</html>

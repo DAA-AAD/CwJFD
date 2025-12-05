@@ -1,3 +1,9 @@
+12/4/2025
+Made instructions for a little game[
+    -movement, intro, and art has been set up
+    - I might fix the intro later(and also text in general)
+]
+
 12/1/2025
 Made a general ReadMe for the repository and I literally only renamed a singular folder...
 
