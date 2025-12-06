@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+</head>
+<body>
+    <script>
+        setTimeout(() => {
+  console.log("Check");
+}, 2000); // s=1000s
+let timer=60
+function Timer(){
+setTimeout(()=>{timer=timer-1;console.log(timer)
+},2000);
+requestAnimationFrame(Timer)}
+Timer()
+    </script>
+</body>
+</html>
