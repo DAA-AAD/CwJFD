@@ -56,11 +56,30 @@
 <audio id="7" src="DontTouchThatDial.mp3"></audio>
 <button onclick="document.getElementById('7').play()">Play</button>
 <button onclick="document.getElementById('7').pause()">Pause</button>
+
+<h3>Mother's Love(Full)[not available at the moment]</h3>
+<script>
+  function MotherLove(){
+    //set this up in the morning
+  }
+</script>
+
+<h3>Toby Fox's Room</h3>
+<audio id="9" src="../../Undertale[s]_Save-Files/Undertale/mus_dogroom.ogg"></audio>
+<button onclick="document.getElementById('9').play()">Play</button>
+<button onclick="document.getElementById('9').pause()">Pause</button>
+
+<h3>Full Undertale Soundtrack at the same time(just wait 19 seconds)</h3>
+<audio id="10" src="UndertaleSoundtrackAllAtOnce.mp3"></audio>
+<button onclick="document.getElementById('10').play()">Play</button>
+<button onclick="document.getElementById('10').play()">Pause</button>
 <!--add more from here-->
+
 <h3>ALL IN 1</h3>
 <script>
 function playAll() {
-  const audios = document.querySelectorAll('#all audio');
+  const audios//funny joke(pls laugh)
+   = document.querySelectorAll('#all audio');
   audios.forEach(a => {
     a.currentTime = 0;  //restart from beginning
     a.play();
@@ -81,7 +100,7 @@ let random=Math.floor(Math.random()*8);document.getElementById(random).pause()
 <div id="all"><!--audio list-->
   <audio src="BigShot.mp3"></audio><audio src="LetMeIn1hr.mp3"></audio><audio src="BiteMe1hr.mp3"></audio>
   <audio src='TvTime.mp3'></audio><audio src="SpiderDanceVocaloid.mp3"></audio><audio src="StaticMiku.mp3">
-  </audio><audio src="DontTouchThatDial.mp3"></audio>
+  </audio><audio src="DontTouchThatDial.mp3"></audio><audio src="UndertaleSoundtrackAllAtOnce.mp3"></audio>
 </div>
 <button  onclick='playAll()'>Play All</button>
 <button onclick="pauseAll()">Pause All</button>

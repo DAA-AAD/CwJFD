@@ -49,21 +49,20 @@ const world = {
   color: '#00308F'
   // sky blue=87CEEB
 };
-//let age= prompt('age?')
-//if(age>43){
-  //alert('you\'re old')
-//}else if(13>age){
-  //let age=31
-//}
+let age= Number(prompt('age?'));
+if(age>45){alert('https://www.youtube.com/watch?v=iFZiTa_s_Ug')}else if(13>age){age=31}else if
+(age==13){age=21.7}
 // Player
 const player = {
   x: 80, y: 100, w: 36, h: 48,
   vx: 0, vy: 0,
-  speed: 200, jump:910/(13/10),
+  speed: 200, jump:19530/age,
   onGround: false,
   color: '#ff6b6b'
   //Persimmon /\ color
 }; 
+
+//   19530/x=900/1
 
 // Camera
 const cam = { x:0, y:0, width: innerWidth, height: innerHeight };

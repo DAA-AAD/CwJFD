@@ -1,3 +1,7 @@
+12/10/2025
+More music/pictures(updated the htmls respectively), fixed the math for one of the platformers, reduced lag on the rainbow
+friends html, setting up the groundwork for the next parts of the game
+
 12/6/2025
 I have set up a way for you to survive, will start setting up for the next enemy now
 
