@@ -1,3 +1,7 @@
+12/14/2025
+debugging, movement changes, borders rainbowFriends.html | I downloaded a game it connnected to my Git so I'm trying to
+unconnect it
+
 12/10/2025
 More music/pictures(updated the htmls respectively), fixed the math for one of the platformers, reduced lag on the rainbow
 friends html, setting up the groundwork for the next parts of the game

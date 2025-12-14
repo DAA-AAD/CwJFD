@@ -1,4 +1,3 @@
-WASD= Main controls
--diagonal movement self explanatory
-
+WASD= Movement
+Q=Box(when added)
 other controls explained in-game
