@@ -1,3 +1,7 @@
+12/17/2025
+Made a little rickroll for a friend of mine | added prompt to the calculator/ renamed a file | renamed file, minor visual edits
+ | orange enemy, visuals set up, might fix movement later
+
 12/14/2025
 debugging, movement changes, borders rainbowFriends.html | I downloaded a game it connnected to my Git so I'm trying to
 unconnect it

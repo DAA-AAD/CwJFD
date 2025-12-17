@@ -34,16 +34,6 @@ function resize() {
 addEventListener('resize', resize);
 resize();
 
-const a =Math.floor(Math.random() * 5);
-  const Sprite=[
-    "../pictures/TvTime.png",
-    "../pictures/Stitch.png",
-    "../pictures/Alastor.png",
-    "../pictures/Asriel_PFP_Git.png",
-    "../pictures/Cyn.png"];
-let playerSprite= new Image();
-playerSprite.src =Sprite[a]
-
 const player = {
   x:80, y:100, w:36, h:48,
   vx:0, vy:0,
@@ -70,14 +60,10 @@ const cam = { x:0, y:0 };
 function level() {
 
   //background picture
-  const r = Math.floor(Math.random() * 6);
+  const r = Math.floor(Math.random()*6);
   const backgrounds = [
-    "../pictures/TvTime.png",
-    "../pictures/Stitch.png",
-    "../pictures/Alastor.png",
-    "../pictures/Asriel_PFP_Git.png",
-    "PlayerDesign.png",
-    "../pictures/Cyn.png"
+    "../pictures/TvTime.png","../pictures/Alastor.png","../pictures/Asriel_PFP_Git.png",
+    "../pictures/Cyn.png",'../pictures/AlastorCat.png','../pictures/FortnitePeterGriffin.png'
   ];
   bgImg.src = backgrounds[r];
 
@@ -272,8 +258,7 @@ function draw(){
   }
 
   // Player
-  if (playerSprite.complete) {
-  ctx.drawImage(playerSprite, player.x, player.y, player.w, player.h);}
+  ctx.fillStyle='#000000';ctx.fillRect(player.x,player.y,player.w,player.h)
 
   // Eyes
   ctx.fillStyle = '#fff';
