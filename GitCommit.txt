@@ -1,3 +1,7 @@
+12/24/2025
+added new song to the Music folder | made a copy of the platformer for a friend of mine | made some text changes to the 
+Platformer Aged version | text changes, changes to orange movement/ setting up target changes, general base for purple
+
 12/17/2025
 Made a little rickroll for a friend of mine | added prompt to the calculator/ renamed a file | renamed file, minor visual edits
  | orange enemy, visuals set up, might fix movement later
