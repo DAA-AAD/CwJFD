@@ -1,3 +1,0 @@
-WASD= Movement
-Q=Box(when added)
-other controls explained in-game

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pikshurs</title>
+</head>
+<body style="background-color: rgb(73, 0, 0);">
+    <script>
+     const pictureList = document.createDocumentFragment();
+['Alastor.png','AlastorCat.png','Asriel_PFP_Git.png','BlueEnemy.png','chez.png','cheza.png','Cyn.png','dave.png',
+    'FortnitePeterGriffin.png','GreenEnemy.png','RanbowFwens_BG.png','LordChez.png','OrangeEnemy.png','Player.png',
+    'PurpleEnemy.png','Seller.png','Stitch.png','TvTime.png','RanbowFwens_end.png','RanbowFwens_deth.png'
+].forEach(src=>{
+  const img = new Image();img.src = src;img.width=200;img.height=200;
+  pictureList.appendChild(img);});
+document.body.appendChild(pictureList);
+    </script>
+<br><video controls src='TennaDancing.mp4'></video>
+</body>
+</html>

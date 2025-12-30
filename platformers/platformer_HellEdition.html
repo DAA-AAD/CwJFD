@@ -10,28 +10,27 @@
     .hint{position:absolute;left:12px;top:12px;background:rgba(255, 255, 255, 0.85);padding:8px;border-radius:8px}
   </style>
 </head>
+
 <body>
 <canvas id="game"></canvas>
-<div class="hint">wasd + arrow keys | K=kys</div>
+<div class="hint">WASD/Arrow Keys — R for new level — K=kys</div>
+<div class="hint2">Try and not Die</div>
 
 <script>
+// Canvas Setup
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 let DPR = Math.max(1, window.devicePixelRatio || 1);
-function resize(){
-  canvas.width = innerWidth * DPR;
+
+function resize() {
+  canvas.width  = innerWidth * DPR;
   canvas.height = innerHeight * DPR;
-  canvas.style.width = innerWidth + 'px';
+  canvas.style.width  = innerWidth + 'px';
   canvas.style.height = innerHeight + 'px';
   ctx.setTransform(DPR,0,0,DPR,0,0);
 }
 addEventListener('resize', resize);
 resize();
-
-// Input
-const keys = {};
-addEventListener('keydown', e => { keys[e.code] = true; if(e.code==='Space') e.preventDefault(); });
-addEventListener('keyup', e => { keys[e.code] = false; });
 
 //world
 const world = {
@@ -39,153 +38,186 @@ const world = {
   color: '#000000'//sky blue
 };
 
-const DaveImg=new Image();
-DaveImg.src='../pictures/dave.png';
-const Dave={x:0,y:338,w:100,h:100};
-
-let sped= Math.floor(Math.random()*720);
-let jmp=Math.floor(Math.random()*700);
 // Player
 let player = {
   x: 80, y: 100, w: 36, h: 48,
   vx: 0, vy: 0,
-  speed:sped, jump:jmp,
-  onGround: false,
-  color: '#FF0000'
-};
+  speed:Math.ceil(Math.random()*720)+200,
+  jump:Math.ceil(Math.random()*700)+300,
+  onGround: false,color:'#FF0000'};
 
-// Camera
-const cam = { x:0, y:0, width: innerWidth, height: innerHeight };
+const DaveImg=new Image();
+DaveImg.src='../images/dave.png';
+const Dave={x:0,y:338,w:100,h:100};
+let platforms = [];
+let movingPlat = [];
+let coins = [];
+let score=0;
 
-// Platforms
-const minx=440;
-const maxx=1100;
-const miny=180;
-const maxy=420;
-let px=Math.floor(Math.random()*(maxx+minx))+100;
-let py=Math.floor(Math.random()*(maxy+miny)-miny);
-let px2=Math.floor(Math.random()*(maxx+minx))+100;
-let py2=Math.floor(Math.random()*(maxy+miny)-miny);
-let px3=Math.floor(Math.random()*(maxx+minx))+100;
-let py3=Math.floor(Math.random()*(maxy+miny)-miny);
-console.log(Math.ceil((px+px2+px3)/3) +'px_average')
+let bgImg = new Image();
 
-let platforms = [
-    {x:-10, y:400, w:210,h:28},
-  {x: 420, y: 300, w: 220, h: 28},
-  {x: 420, y: 180, w: 180, h: 28},
-  {x: px, y: py, w: 300, h: 28},
-  {x: px2, y: py2, w: 240, h: 28},
-  {x: px3, y: py3, w: 200, h: 28},
-  {x: 2200, y: 420, w: 800, h: 48},
-];
-// Moving platforms
-const movingPlat = [
-  {x: 420, y: 230, w: 180, h: 28, baseX:420, range:80, speed: 100},
-  {x: px+300, y: py+200, w: 180, h: 28, baseX:px+300, range:150, speed: 100},
-  {x: px2+300, y: py2+80, w: 200, h: 28, baseX:px+500, range:180, speed: 100},
-  {x: px3+300, y: py3+120, w: 160, h: 28, baseY:300, range:80, speed:100, vertical:true}
-];
-for (const mp of movingPlat) platforms.push(mp);
+const cam = { x:0, y:0 };
+// Generate Level
+function level() {
+  player.speed=Math.ceil(Math.random()*720)+200;
+  player.jump=Math.ceil(Math.random()*700)+300;
+  // Random positions
+  const minx=440, maxx=1100;
+  const miny=180, maxy=420;
 
-let cx=Math.floor((Math.random()*1100)+400);
-let cx2=Math.floor((Math.random()*1100)+400);
-let cx1=Math.floor((Math.random()*1100)+400);
-let cx3=Math.floor((Math.random()*1100)+400);
-console.log(Math.ceil((cx+cx1+cx2+cx3)/4) +'cx_average')
-//XCoinRange=400-1500(1100) YCoinRange=-200- -80(120)
-//coins
-let coins = [
-  {x:450,y:290,r:1, picked:false},
-  {x:cx,y:py-50,r:1, picked:false},
-  {x:cx1,y:py-100,r:1, picked:false},
-  {x:cx2,y:py3-20,r:1, picked:false},
-  {x:cx3,y:py2-40,r:1, picked:false}
-];
+  const px  = Math.floor(Math.random()*(maxx+minx))+100;
+  const py  = Math.floor(Math.random()*(maxy+miny)-miny);
+  const px2 = Math.floor(Math.random()*(maxx+minx))+100;
+  const py2 = Math.floor(Math.random()*(maxy+miny)-miny);
+  const px3 = Math.floor(Math.random()*(maxx+minx))+100;
+  const py3 = Math.floor(Math.random()*(maxy+miny)-miny);
 
-let score = 0;
-let last = performance.now();
+  // Make platforms
+  platforms = [
+    {x:-10, y:400, w:210, h:28},
+    {x:420, y:300, w:220, h:28},
+    {x:420, y:180, w:180, h:28},
+    {x:px,  y:py,  w:300, h:28},
+    {x:px2, y:py2, w:240, h:28},
+    {x:px3, y:py3, w:200, h:28},
+    {x:2200, y:420, w:800, h:48}
+  ];
 
+  // Moving platforms
+  movingPlat = [
+    {x:420, y:230, w:180, h:28, baseX:420, range:80, speed:40},
+    {x:px+300,  y:py+200,  w:180, h:28, baseX:px+300, range:150, speed:80},
+    {x:px2+300, y:py2+80,  w:200, h:28, baseX:px2+500, range:180, speed:90},
+    {x:px3+300, y:py3+120, w:160, h:28, baseY:300,    range:80, speed:60, vertical:true}
+  ];
+
+  platforms.push(...movingPlat);
+
+  // Coins
+  const cx  = Math.floor(Math.random()*1100+400);
+  const cx1 = Math.floor(Math.random()*1100+400);
+  const cx2 = Math.floor(Math.random()*1100+400);
+  const cx3 = Math.floor(Math.random()*1100+400);
+
+  coins = [
+    {x:450,y:290,r:8, picked:false},
+    {x:cx,  y:py-50, r:16, picked:false},
+    {x:cx1, y:py+100,r:16, picked:false},
+    {x:cx2, y:py-20, r:16, picked:false},
+    {x:cx3, y:py+20, r:16, picked:false},
+  ];
+
+  reset();
+}
+// Reset Player
+function reset() {
+  player.x = 80;
+  player.y = 100;
+  player.vx = 0;
+  player.vy = 0;
+  score=0;
+  coins.forEach(c => c.picked = false);
+}
+// Input
+const keys = {};
+
+addEventListener('keydown', e => {
+  keys[e.code] = true;
+
+  if (e.code === 'Space') e.preventDefault();
+
+  // Regenerate level
+  if (e.code === 'KeyR') {
+    level();
+  }
+});
+
+addEventListener('keyup', e => {
+  keys[e.code] = false;
+});
+// Collision
 function rectsIntersect(a,b){
-  return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  return a.x < b.x + b.w &&
+         a.x + a.w > b.x &&
+         a.y < b.y + b.h &&
+         a.y + a.h > b.y;
 }
-
+// Physics
 function physics(dt){
- // update moving platforms
-for (const mp of movingPlat) {
-  const t = performance.now() / 1000 * mp.speed / 20;
-  if (mp.vertical)
-    mp.y = mp.baseY + Math.sin(t) * mp.range;
-  else
-    mp.x = mp.baseX + Math.sin(t) * mp.range;
-}
+  // Moving platforms
+  for (const mp of movingPlat) {
+    const t = performance.now() / 1000 * mp.speed / 20;
+    if (mp.vertical)
+      mp.y = mp.baseY + Math.sin(t) * mp.range;
+    else
+      mp.x = mp.baseX + Math.sin(t) * mp.range;
+  }
 
-  // input
+  // Input
   let dir = 0;
   if(keys['ArrowLeft']||keys['KeyA']) dir -= 1.5;
   if(keys['ArrowRight']||keys['KeyD']) dir += 1.5;
-  const accel = player.speed;
-  player.vx = dir * accel;
+  player.vx = dir * player.speed;
 
-  // jump
-  if((keys['ArrowUp']||keys['Space']||keys['KeyW']) && player.onGround){ player.vy = -player.jump; player.onGround = false; }
+  // Jump
+  if ((keys['ArrowUp']||keys['Space']||keys['KeyW']) && player.onGround) {
+    player.vy = -player.jump;
+    player.onGround = false;
+  }
 
 if(keys['KeyK']){reset()}
 
-  // gravity
+  // Gravity
   player.vy += (world.gravity * dt) - 18;
 
-  // horizontal movement
+  // Horizontal
   player.x += player.vx * dt;
-  // horizontal collisions
-  for(const p of platforms){
-    if(rectsIntersect(player, p)){
-      if(player.vx > 0) player.x = p.x - player.w; else if(player.vx < 0) player.x = p.x + p.w;
+  for (const p of platforms){
+    if(rectsIntersect(player,p)){
+      if(player.vx > 0) player.x = p.x - player.w;
+      else if(player.vx < 0) player.x = p.x + p.w;
       player.vx = 0;
     }
   }
 
-  // vertical
+  // Vertical
   player.y += player.vy * dt;
   player.onGround = false;
-
-  for(const p of platforms){
-    if(rectsIntersect(player, p)){
-      if(player.vy > 0){ //land on top of platforms
+  for (const p of platforms){
+    if(rectsIntersect(player,p)){
+      if(player.vy > 0){
         player.y = p.y - player.h;
         player.vy = 0;
         player.onGround = true;
-      } else if(player.vy < 0){ // hitting head
+      } else if (player.vy < 0){
         player.y = p.y + p.h;
-        player.vy = 0;
+        player.vy = 0;}}}
+
+  // Coin collect
+  for (const c of coins) {
+    if (!c.picked) {
+      const dx = (player.x+player.w/2)-c.x;
+      const dy = (player.y+player.h/2)-c.y;
+      if (Math.hypot(dx,dy) < c.r + player.w/2) {
+        c.picked = true;
+        score++;
       }
     }
   }
 
-  // coin pickup
-  for(const c of coins){
-    if(!c.picked){
-      const dx = (player.x + player.w/2) - c.x;
-      const dy = (player.y + player.h/2) - c.y;
-      if(Math.hypot(dx,dy) < c.r + Math.max(player.w,player.h)/2 ){
-        c.picked = true; score += 1;
-      }
-    }
-  }
-
-  //pit
+  // Pit
   if(player.y > 1500){
     reset();
   }
 }
-
+// Camera
 function updateCam(){
-  const targetX = player.x + player.w/2 - canvas.width/(DPR)+20;
-   const targetY=player.y+player.w/2-canvas.height/(2*DPR)+120;
-  cam.x +=((targetX - cam.x) * 0.12)+120;
-  cam.y += (targetY-cam.y)*0.12;
-}
+  const targetX = player.x + player.w/2 - canvas.width/(2*DPR) + 120;
+  const targetY = player.y + player.h/2 - canvas.height/(2*DPR) + 120;
 
+  cam.x += (targetX - cam.x) * 0.12;
+  cam.y += (targetY - cam.y) * 0.12;
+}
 
 function draw(){
   ctx.fillStyle = world.color;
@@ -212,7 +244,7 @@ function draw(){
   ctx.fillStyle = player.color;
   ctx.fillRect(player.x, player.y, player.w, player.h);
   
-  // finish line
+  // goal
   ctx.fillStyle = '#ffb703'; ctx.fillRect(2500, 360-120, 12, 120);
 
   ctx.restore();
@@ -222,26 +254,29 @@ function draw(){
   ctx.fillStyle = '#fff'; ctx.font = '16px system-ui'; ctx.fillText('Score: ' + score, 22, canvas.height/DPR-22);
 }
 
+// Game Loop
+let last = performance.now();
+
 function loop(now){
-  const dt = Math.min(0.033, (now - last)/1000);
+  const dt = Math.min(0.033, (now-last)/1000);
   last = now;
+if(player.x>2460){level()}
   physics(dt);
   updateCam();
   draw();
 
-if (DaveImg.complete) {
-        ctx.drawImage(DaveImg, Dave.x, Dave.y, Dave.w, Dave.h);
-    }
-    Dave.x=Dave.x+4
-    if(Dave.x>(player.x+1000)){Dave.x=(player.x-1000);Dave.y=Math.ceil(Math.random()*500)}
   requestAnimationFrame(loop);
 }
 
-function reset(){
-  player.x = 80; player.y = 100; player.vx = 0; player.vy = 0; score = 0;
-  coins.forEach(c => c.picked = false);
-}
+// Start
+level();
 requestAnimationFrame(loop);
 </script>
+<!--audio-->
+<audio id="mus" src="../audio/1hr_World'sFinalTurn.mp3"></audio>
+
+<button onclick="document.getElementById('mus').play()">Play</button>
+<button onclick="document.getElementById('mus').pause()">Pause</button>
+
 </body>
 </html>

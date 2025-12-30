@@ -52,10 +52,10 @@ const chez4={x:chez3.x-50,y:Dave.y+50,h:50,w:50};
 const lordChez={x:chez4.x-550,y:Dave.y,h:500,w:500};
 
 //Audio
-const meow=new Audio('../music/CatScream.mp3');
+const meow=new Audio('../music/CatScream_sfx.mp3');
 let score=0;
 console.log(score);
-const music=new Audio('../music/DontTouchThatDial.mp3');
+const music=new Audio('../music/Don\'tTouchThatDial.mp3');
 
 canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
@@ -78,9 +78,7 @@ function loop() {
         ctx.drawImage(bg, 0, 0, canvas.width / DPR, canvas.height / DPR);
     }
     //Dave
-    if (DaveImg.complete) {
-        ctx.drawImage(DaveImg, Dave.x, Dave.y, Dave.w, Dave.h);
-    }
+    if (DaveImg.complete) {ctx.drawImage(DaveImg, Dave.x, Dave.y, Dave.w, Dave.h);}
     //chez
     chezs+=0.05;//cheese speed
     let chesanimateUp=(Math.sin(chezs))*25;

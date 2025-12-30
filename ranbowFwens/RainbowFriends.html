@@ -11,16 +11,20 @@
 <script>
 //intro placeholder
 let pSpeed=1;
-let enemy='blue';let timer=3000;let admin=1;let border=1;
-let UserName=''
-if(admin===0){UserName=prompt('Who has returned here?');
+let enemy='blue';let timer=1800;let border=1;
+let UserName='';
+UserName=prompt('Who has returned here?');
     alert('Hey'+' '+UserName+'! come here, there\'s free games! just click that button right there');//seller talk start
     alert('AAAH! this wasn\'t supposed to happen!');//Red talk start
-    alert('Hello young one, It appears I\'m in quite the pickle, help me and I\'ll help you. Huh... what\'s BLUE doing?')}
-    else {UserName='Maker';debug()}
+    alert('Hello young one, It appears I\'m in quite the pickle, help me and I\'ll help you. Huh... what\'s BLUE doing?')
+
+const endscreen=new Image();
+endscreen.src='../images/RanbowFwens_end.png';
+const dethscreen=new Image();
+dethscreen.src='../images/RanbowFwens_deth.png'
 
 const bg=new Image();
-bg.src='../pictures/introMungus.png';
+bg.src='../images/RanbowFwens_BG.png';
 const canvas=document.getElementById('game');
 const ctx=canvas.getContext('2d');
 let DPR=Math.max(1,window.devicePixelRatio||1);
@@ -38,32 +42,29 @@ ctx.setTransform(DPR,0,0,DPR,0,0);
 //player
 let player={x:180,y:108,w:63,h:55}
 const playerSprite=new Image();
-playerSprite.src='../pictures/Player.png';
+playerSprite.src='../images/Player.png';
 
 //enemies
 let blue={x:-68,y:-105,w:68,h:105};
 const blueSprite=new Image();
-blueSprite.src='../pictures/BlueEnemy.png';
-
-function debug(){enemy='orange';border=0;requestAnimationFrame(debug)}
+blueSprite.src='../images/BlueEnemy.png';
 
 var targetX;var targetY;
-let green={x:-80,y:-102,w:80,h:102};
+let green={x:-90,y:-112,w:90,h:112};
 const greenSprite=new Image();
-greenSprite.src='../pictures/GreenEnemy.png';
+greenSprite.src='../images/GreenEnemy.png';
 //fix orange and purple sizes later
 let orange={x:-77,y:-94,w:77,h:94};
 const orangeSprite=new Image();
-orangeSprite.src='../pictures/OrangeEnemy.png';
+orangeSprite.src='../images/OrangeEnemy.png';
 
-let purple={x:-25,y:-17,w:25,h:17};
+let purple={x:-51,y:-30,w:51,h:30};
 const purpleSprite=new Image();
-purpleSprite.src='../pictures/PurpleEnemy.png';
-
+purpleSprite.src='../images/PurpleEnemy.png';
 //intro seller
 let intro={x:150,y:75,w:48,h:72}
 const IntroSprite=new Image();
-IntroSprite.src='../pictures/Seller.png';
+IntroSprite.src='../images/Seller.png';
 
 //controls
 document.addEventListener('keydown', PlayerMove);
@@ -72,6 +73,7 @@ document.addEventListener('keydown',e =>{comboKeys[e.code]=true;} );
 document.addEventListener('keyup',e =>{comboKeys[e.code]=false;} );
 
 function PlayerMove(e){
+    if(ded==0){
     if(e.code ==='KeyA'){player.x=player.x-(3*pSpeed)}//left
 if(e.code === 'KeyD'){player.x=player.x+(3*pSpeed)}//right
 if(e.code==='KeyW'){player.y=player.y-(3*pSpeed)}//up
@@ -82,69 +84,85 @@ if(comboKeys['KeyW']&&comboKeys['KeyD']){player.x=player.x+(3*pSpeed);player.y=p
 if(comboKeys['KeyS']&&comboKeys['KeyA']){player.x=player.x-(3*pSpeed);player.y=player.y+(3*pSpeed)}//DownLeft
 if(comboKeys['KeyS']&&comboKeys['KeyD']){player.x=player.x+(3*pSpeed);player.y=player.y+(3*pSpeed)}//DownRight
 
-//border
+//border   x={0-1302},y={0-720}
 if(player.x<0){player.x=0}
 if(player.x>1302){player.x=1302}
 if(player.y<0){player.y=0}
 if(player.y>720){player.y=720}}
+else{player.x=-200;player.y=-200}}
 
 //timers
 let timerType=1;
 function Timer1(){timer=timer-1;
     if(timer<0&&timerType==1){
 alert("well at least I have legs... Oh yeah green can\'t see so just don\'t get close to him he won\'t kill you...most likely");
-enemy='green';blue.x=-100;blue.y=-100;timer=3000;timerType=2;border=0}}
+enemy='green';blue.x=-100;blue.y=-100;timer=4800;timerType=2;border=0}}
+
 function Timer2(){timer=timer-1;
     if(timer<0 && timerType==2){
         alert('Thank you for getting my thorax back! Stay out of Orange\'s way and he won\'t kill you');
-enemy='orange';green.x=-100;green.y=-100;timer=3000;timerType=3;OrangeTargetCheck=true}}
+enemy='orange';green.x=-100;green.y=-100;timer=6600;timerType=3;orangePath=0}}
+
 function Timer3(){timer=timer-1;
     if(timer<0 && timerType==3){
-        alert('YOU LIVE');//placeholder text
-enemy='purple';orange.x=-100;orange.y=-100;timer=3000;timerType=4}}
+alert('Yay I have arms but my head still feels weird.Purple can go through the vents to catch you so good luck!');
+enemy='purple';orange.x=-100;orange.y=-100;timer=1800;timerType=4}}
 
-//orangPath (0-3=paths,-1=not in use)
-let orangePath=-1;let OrangeTargetCheck=false;let greenTargetCheck=false;let PurpleTargetCheck=false
+function Timer4(){timer=timer-1;
+    if(timer<0 && timerType==4){
+alert('Congrats on living');
+enemy='end';purple.x=-100;purple.y=-100;timer=30000;timerType=5}}
+
+let greenTargetCheck=false;let PurpleTargetCheck=false;let orangePath=4
 function enemyMove(){
-if(enemy==='blue'){if(player.x>blue.x){blue.x=blue.x+1} else if(player.x<blue.x){blue.x=blue.x-1}
-if(player.y>blue.y){blue.y=blue.y+1} else if(player.y<blue.y){blue.y=blue.y-1}}
+if(enemy==='blue'){if(player.x>blue.x){blue.x=blue.x+1} 
+else if(player.x<blue.x){blue.x=blue.x-1}
+if(player.y>blue.y){blue.y=blue.y+1} 
+else if(player.y<blue.y){blue.y=blue.y-1}}
+
 if(border=='1'){if(blue.x<0){blue.x=0};
 if(blue.x>1300){blue.x=1300};
 if(blue.y<0){blue.y=0};
 if(blue.y>671){blue.y=671}}
 
-    if(enemy === 'green'){if(!greenTargetCheck){
+    if(enemy==='green'){if(!greenTargetCheck){
             greenTargetCheck=true;setTimeout(() => {
                 targetX=Math.random()*1287;targetY=Math.random()*674;
                 greenTargetCheck=false;}, 3000);}
-        if(targetX>green.x)green.x+=2;
-        if(targetX<green.x)green.x-=2;
-        if(targetY>green.y)green.y+=2;
-        if(targetY<green.y)green.y-=2;}
+        if(targetX>green.x)green.x+=2.5;
+        if(targetX<green.x)green.x-=2.5;
+        if(targetY>green.y)green.y+=2.5;
+        if(targetY<green.y)green.y-=2.5;}
     
-if(enemy==='orange'){
-if(OrangeTargetCheck==true){setTimeout(()=>{OrangePath=OrangePath+1},1000);}
-      if(orangePath===0){ targetX=153;targetY=678;}
-      else if(orangePath===1){targetX=165;targetY=129;}
-      else if(orangePath===2){targetX=1257;targetY=108;}
-      else if(orangePath===3){targetX=1272;targetY=675;}
-      while(orangePath)//checks to see if Orange is at target might scrap FINISH THIS
+if(enemy==='orange'){if(orangePath===0){ targetX=166;targetY=131;}//set target
+      else if(orangePath===1){targetX=1258;targetY=131;}
+      else if(orangePath===2){targetX=1258;targetY=680;}
+      else if(orangePath===3){targetX=166;targetY=680;}
 
-      if(targetX>orange.x){orange.x=orange.x+2}
-      if(targetX<orange.x){orange.x=orange.x-2}
-      if(targetY>orange.y){orange.y=orange.y+2}
-      if(targetY<orange.y){orange.y=orange.y-2}
+      if(orangePath==4){if(Math.floor(Math.random()*2)==0){targetX=player.x;targetY=player.y;}
+      else{orangePath=0}}
+//change the target
+ if(orange.x==166&&orange.y==131&&orangePath==0){orangePath=1}
+ if(orange.x==1258&&orange.y==131&&orangePath==1){orangePath=2}
+ if(orange.x==1258&&orange.y==680&&orangePath==2){orangePath=3}
+ if(orange.x==166&&orange.y==680&&orangePath==3){orangePath=4}
+ if(orange.x==targetX&&orange.y==targetY&&orangePath==4){orangePath=0}
+      //movement    x(-77),y(-94)
 
-}
+//   (((77+166)/3)x60)+(((94+131)/3)x60)+(((1258-166)/3)x60)
+      if(targetX>orange.x){orange.x=orange.x+3}
+      if(targetX<orange.x){orange.x=orange.x-3}
+      if(targetY>orange.y){orange.y=orange.y+3}
+      if(targetY<orange.y){orange.y=orange.y-3}}
 
 
 
-if(enemy=='purple'){if(!PurpleTargetCheck){PurpleTargetCheck=true;setTimeout(()=>{targetX=player.x;
-        targetY=player.y},1000);}
+if(enemy=='purple'){setTimeout(()=>{targetX=player.x;
+        targetY=player.y},1000)
         if(targetX>purple.x)purple.x+=5;
-        if(targetX>purple.y)purple.y+=5;
+        if(targetY>purple.y)purple.y+=5;
         if(targetX<purple.x)purple.x-=5;
-        if(targetX<purple.y)purple.y-=5;}
+        if(targetY<purple.y)purple.y-=5;}
     }
 
 let ded=0;
@@ -180,10 +198,11 @@ let purpleCenterY=purple.y+purple.h/2;
     if(dethRange4<50){ded=1;alert("It seems you're a bit PURPLE at your loss... It's okay, just try again");}
 }
 
-function images(){
-    if(bg.complete){ctx.drawImage(bg, 0, 0,1502,920);}
-    if(playerSprite.complete){ctx.drawImage(playerSprite,player.x,player.y,player.w,player.h)}
-    if(blueSprite.complete){ctx.drawImage(blueSprite,blue.x,blue.y,blue.w,blue.h)}
+function images(){if(ded==1&&dethscreen.complete){ded=1.5;dethscreen,0,0,1502,920}
+if(enemy=='end'&&endscreen.complete){ctx.drawImage(endscreen,0,0,1502,920)}
+if(bg.complete){ctx.drawImage(bg, 0, 0,1502,920);}
+if(playerSprite.complete){ctx.drawImage(playerSprite,player.x,player.y,player.w,player.h)}
+if(blueSprite.complete){ctx.drawImage(blueSprite,blue.x,blue.y,blue.w,blue.h)}
 if(greenSprite.complete){ctx.drawImage(greenSprite,green.x,green.y,green.w,green.h)}
 if(orangeSprite.complete){ctx.drawImage(orangeSprite,orange.x,orange.y,orange.w,orange.h)}
 if(purpleSprite.complete){ctx.drawImage(purpleSprite,purple.x,purple.y,purple.w,purple.h)}
@@ -191,9 +210,13 @@ if(purpleSprite.complete){ctx.drawImage(purpleSprite,purple.x,purple.y,purple.w,
     //if(IntroSprite.complete){ctx.drawImage(IntroSprite,intro.x,intro.y,intro.w,intro.h)}
    if(ded==1){ctx.fillStyle='#000000';ctx.fillRect(0,0,canvas.width,canvas.height)}}
 
-function loops(){images();dethChek();enemyMove();Timer1();Timer2();
+function loops(){images();dethChek();enemyMove();Timer1();Timer2();Timer3();
     requestAnimationFrame(loops);}loops()
 
+
+
+    //   Need to work on:   finish purple,add the seller guy maybe, finish adding the death screen/end screen,
+//       adjust orange speed
     </script>
 </body>
 </html>

@@ -51,7 +51,7 @@ const world = {
 let platforms = [];
 let movingPlat = [];
 let coins = [];
-let score = 0;
+let score=0;
 
 let bgImg = new Image();
 
@@ -62,8 +62,8 @@ function level() {
   //background picture
   const r = Math.floor(Math.random()*6);
   const backgrounds = [
-    "../pictures/TvTime.png","../pictures/Alastor.png","../pictures/Asriel_PFP_Git.png",
-    "../pictures/Cyn.png",'../pictures/AlastorCat.png','../pictures/FortnitePeterGriffin.png'
+    "../images/TvTime.png","../images/Alastor.png","../images/Asriel_PFP_Git.png",
+    "../images/Cyn.png",'../images/AlastorCat.png','../images/FortnitePeterGriffin.png'
   ];
   bgImg.src = backgrounds[r];
 
@@ -121,7 +121,7 @@ function reset() {
   player.y = 100;
   player.vx = 0;
   player.vy = 0;
-  score = 0;
+  score=0;
   coins.forEach(c => c.picked = false);
 }
 // Input
@@ -285,11 +285,10 @@ function draw(){
 
 // Game Loop
 let last = performance.now();
-
 function loop(now){
   const dt = Math.min(0.033, (now-last)/1000);
   last = now;
-
+if(player.x>2460){level()}
   physics(dt);
   updateCam();
   draw();
@@ -303,7 +302,7 @@ requestAnimationFrame(loop);
 </script>
 <h3>We're aware of background 6 being annoying but it is FUNNY so we're keeping it</h3>
 <!--audio-->
-<audio id="mus" src="../music/LetMeIn1hr.mp3"></audio>
+<audio id="mus" src="../audio/1hr_World'sFinalTurn.mp3"></audio>
 
 <button onclick="document.getElementById('mus').play()">Play</button>
 <button onclick="document.getElementById('mus').pause()">Pause</button>

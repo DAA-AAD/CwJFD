@@ -1,3 +1,10 @@
+12/26/2025
+renamed the music folder to audio and replaced some of the songs with looped versions | put the projects I made for my friends
+in 1 folder | updated the Html reference folder to work with the new images/ audio folders | deleted the video folder and
+renamed the pictures folder to images | updated Dave The Magical Cheese Wizard to work with the new images / audio folder | 
+updated the platformers to work with the new folders along with the level generation to match the "R" key in the 1st platformer
+ | functionally the Rainbow Friends game is finished although I do plan to try and make it look good
+
 12/24/2025
 added new song to the Music folder | made a copy of the platformer for a friend of mine | made some text changes to the 
 Platformer Aged version | text changes, changes to orange movement/ setting up target changes, general base for purple
