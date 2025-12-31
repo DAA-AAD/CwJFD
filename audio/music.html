@@ -7,72 +7,20 @@
 </head>
 <body style="background-color: rgb(150, 0, 153);">
 
- <h3>Bite Me 1hr</h3><audio id='2' src='1hr_BiteMe.mp3'></audio>
- <button onclick="document.getElementById('2').play()">Play</button>
-<button onclick="document.getElementById('2').pause()">Pause</button>
+<h3>Don't Touch That Dial</h3>
+<audio controls loop muted src="Don'tTouchThatDial.mp3"></audio>
+<h3>A Mother's love</h3>
+<audio controls loop muted src="A-Mother'sLove.mp3"></audio>
+<h3>Bite Me</h3>
+<audio controls loop muted src="BiteMe.mp3"></audio>
+<h3>Let Me In</h3>
+<audio controls loop muted src="LetMeIn.mp3"></audio>
+<h3>Spider Dance(vocaloid)</h3>
+<audio controls loop muted src="SpiderDance_vocaloid.mp3"></audio>
+<h3>Static(Miku)</h3>
+<audio controls loop muted src="StaticMiku.mp3"></audio>
+<h3></h3>
+<audio controls loop muted src="World'sFinalTurn.mp3"></audio>
 
- <h3>Let Me in 1hr</h3><audio id='1' src='1hr_LetMeIn.mp3'></audio>
-<button onclick="document.getElementById('1').play()">Play</button>
-<button onclick="document.getElementById('1').pause()">Pause</button>
-
- <h3>Tv Time</h3><audio id='3' src='TvTime.mp3'></audio>
-<button onclick="document.getElementById('3').play()">Play</button>
-<button onclick="document.getElementById('3').pause()">Pause</button>
-
-<h3>Big Shot</h3><audio id='4' src='BigShot.mp3'></audio>
-<button onclick="document.getElementById('4').play()">Play</button>
-<button onclick="document.getElementById('4').pause()">Pause</button>
-
-<h3>Spider Dance(vocaloid) 1hr</h3><audio id="5" src="1hr_SpiderDance(vocaloid).mp3"></audio>
-<button onclick="document.getElementById('5').play()">Play</button>
-<button onclick="document.getElementById('5').pause()">Pause</button>
-
-<h3>Static(Miku) 1hr</h3><audio id="6" src="1hr_StaticMiku.mp3"></audio>
-<button onclick="document.getElementById('6').play()">Play</button>
-<button onclick="document.getElementById('6').pause()">Pause</button>
-
-<h3>Don't touch that Dial! 1hr</h3><audio id="7" src="1hr_Don'tTouchThatDial.mp3"></audio>
-<button onclick="document.getElementById('7').play()">Play</button>
-<button onclick="document.getElementById('7').pause()">Pause</button>
-
-<h3>A Mother's Love 1hr</h3><audio id="8" src="1hr_A-Mother'sLove.mp3"></audio>
-<button onclick="document.getElementById('8').play()">Play</button>
-<button onclick="document.getElementById('8').pause()">Pause</button>
-
-<h3>The World's Final Turn 1hr</h3><audio id="9" src="1hr_World'sFinalTurn.mp3"></audio>
-<button onclick="document.getElementById('9').play()">Play</button>
-<button onclick="document.getElementById('9').pause()">Pause</button>
-
-<h3>Full Undertale Soundtrack at the same time(just wait 19 seconds)</h3>
-<audio id="10" src="UndertaleSoundtrackAllAtOnce.mp3"></audio>
-<button onclick="document.getElementById('10').play()">Play</button>
-<button onclick="document.getElementById('10').play()">Pause</button>
-
-
-
-<h3>ALL IN 1</h3>
-<script>
-function playAll(){
-  const audios//funny joke(pls laugh)
-   = document.querySelectorAll('#all audio');
-  audios.forEach(a=>{a.currentTime = 0;//restart from beginning
-    a.play();});}
-function pauseAll(){const audios = document.querySelectorAll('#all audio');
-  audios.forEach(a=>a.pause());}
-function randomPlay(){let random=Math.floor(Math.random()*8);document.getElementById(random).play()}
-function randomPause(){let random=Math.floor(Math.random()*8);document.getElementById(random).pause()}
-</script>
-<div id="all"><!--audio list-->
-  <audio src="1hr_A-Mother'sLove.mp3"></audio><audio src="1hr_BiteMe.mp3"></audio>
-  <audio src="1hr_Don'tTouchThatDial.mp3"></audio><audio src="1hr_LetMeIn.mp3"></audio>
-  <audio src="1hr_SpiderDance(vocaloid).mp3"></audio><audio src="1hr_StaticMiku.mp3"></audio>
-  <audio src="1hr_World'sFinalTurn.mp3"></audio><audio src="UndertaleSoundtrackAllAtOnce.mp3"></audio>
-</div>
-<button  onclick='playAll()'>Play All</button>
-<button onclick="pauseAll()">Pause All</button>
-
-<h3>Random</h3>
-<button onclick="randomPlay()">play random</button>
-<button onclick="randomPause()">pause random</button>
 </body>
 </html>
