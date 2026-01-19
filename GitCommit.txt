@@ -1,3 +1,12 @@
+1/18/2052
+I renamed the music folder to "audio" and added more music to the html| editted 36 characters in Dave The Magical Cheese Wizard
+to work with the images folder| and I fixed the green and purple movement so they don't go ballistic and in my opinion it looks
+nicer, also made the path for orange slightly more varied, purple now teleports around as if it were venting
+
+12/31/2025
+I've finally fixed all the issues git had with my commits(wow I really haven't done much in a while) | oh and some other things
+that I no longer remember that I did before I had the commit issue
+
 12/26/2025
 renamed the music folder to audio and replaced some of the songs with looped versions | put the projects I made for my friends
 in 1 folder | updated the Html reference folder to work with the new images/ audio folders | deleted the video folder and

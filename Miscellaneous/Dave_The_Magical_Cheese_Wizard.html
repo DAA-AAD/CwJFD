@@ -31,19 +31,19 @@ function resize() {
 addEventListener('resize', resize);
 resize();
 const bg=new Image();
-bg.src='../pictures/chez.png';
+bg.src='../images/chez.png';
 bg.onload=function(){draw();};
 
 //Dave
 const DaveImg=new Image();
-DaveImg.src='../pictures/dave.png';
+DaveImg.src='../images/dave.png';
 const Dave={x:0,y:338,w:100,h:100};
 
 //cheese
 const chezimg=new Image();
 const lordchezimg=new Image();
-chezimg.src='../pictures/cheza.png';
-lordchezimg.src='../pictures/LordChez.png'
+chezimg.src='../images/cheza.png';
+lordchezimg.src='../images/LordChez.png'
 let chezs=0;
 const chez={x:Dave.x-50,y:Dave.y+25,h:50,w:50};
 const chez2={x:chez.x-50,y:Dave.y+50,h:50,w:50};
