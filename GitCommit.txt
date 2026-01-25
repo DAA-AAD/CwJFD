@@ -1,4 +1,10 @@
-1/18/2052
+1/24/2026
+fixed the year on last Commit logging since my [https://tenor.com/ueeQCrNGX8e.gif] didn't notice it's not the year 20252 | 
+added new images/audio, shocker(I'm going to run out of storage at this rate) | ignore the edits on the ball-game folder, I
+started working on it and I have no idea what I was going for there and then I came back to fixing Rainbow Friends| Intro
+sequence and End screen for Rainbow Friends
+
+1/18/2026
 I renamed the music folder to "audio" and added more music to the html| editted 36 characters in Dave The Magical Cheese Wizard
 to work with the images folder| and I fixed the green and purple movement so they don't go ballistic and in my opinion it looks
 nicer, also made the path for orange slightly more varied, purple now teleports around as if it were venting

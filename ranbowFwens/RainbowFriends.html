@@ -9,22 +9,24 @@
 <body>
     <canvas id='game'></canvas>
 <script>
-//intro placeholder
-let pSpeed=1;
-let enemy='blue';let timer=1800;let border=1;
+//WASD movement
+
+let endscreen=new Image()
+endscreen.src='../images/RanbowFwens_end.png'
+const bg=new Image();
+bg.src='../images/RanbowFwens_Thumbnail.png';
+let end=0;let ded=0;let enemy='blue';let timer=1800;let border=1;
+images();
+setTimeout(() => {
 let UserName='';
-UserName=prompt('Who has returned here?');
+        UserName=prompt('Who has returned here?');
     alert('Hey'+' '+UserName+'! come here, there\'s free games! just click that button right there');//seller talk start
     alert('AAAH! this wasn\'t supposed to happen!');//Red talk start
-    alert('Hello young one, It appears I\'m in quite the pickle, help me and I\'ll help you. Huh... what\'s BLUE doing?')
+    alert('Hello young one, It appears I\'m in quite the pickle, help me and I\'ll help you. Huh... what\'s BLUE doing?');
+    bg.src='../images/RanbowFwens_BG.png';
+    loops()
+}, 3000);
 
-const endscreen=new Image();
-endscreen.src='../images/RanbowFwens_end.png';
-const dethscreen=new Image();
-dethscreen.src='../images/RanbowFwens_deth.png'
-
-const bg=new Image();
-bg.src='../images/RanbowFwens_BG.png';
 const canvas=document.getElementById('game');
 const ctx=canvas.getContext('2d');
 let DPR=Math.max(1,window.devicePixelRatio||1);
@@ -41,7 +43,7 @@ ctx.setTransform(DPR,0,0,DPR,0,0);
 
 //player
 const targetGlow=new Image();
-targetGlow.src='../images/RanbowFwens_player_target_glow';
+targetGlow.src='../images/RanbowFwens_player_target_glow.png';
 let player={x:180,y:108,w:63,h:55}
 const playerSprite=new Image();
 playerSprite.src='../images/Player.png';
@@ -75,16 +77,16 @@ document.addEventListener('keydown',e =>{comboKeys[e.code]=true;} );
 document.addEventListener('keyup',e =>{comboKeys[e.code]=false;} );
 
 function PlayerMove(e){
-    if(ded==0){
-    if(e.code ==='KeyA'){player.x=player.x-(3*pSpeed)}//left
-if(e.code === 'KeyD'){player.x=player.x+(3*pSpeed)}//right
-if(e.code==='KeyW'){player.y=player.y-(3*pSpeed)}//up
-if(e.code==='KeyS'){player.y=player.y+(3*pSpeed)}//down
+    if(ded==0&&end==0){
+    if(e.code ==='KeyA'){player.x=player.x- 3}//left
+if(e.code === 'KeyD'){player.x=player.x+ 3}//right
+if(e.code==='KeyW'){player.y=player.y- 3}//up
+if(e.code==='KeyS'){player.y=player.y+ 3}//down
 
-if(comboKeys['KeyW']&&comboKeys['KeyA']){player.x=player.x-(3*pSpeed);player.y=player.y-(3*pSpeed)}//UpLeft
-if(comboKeys['KeyW']&&comboKeys['KeyD']){player.x=player.x+(3*pSpeed);player.y=player.y-(3*pSpeed)}//UpRight
-if(comboKeys['KeyS']&&comboKeys['KeyA']){player.x=player.x-(3*pSpeed);player.y=player.y+(3*pSpeed)}//DownLeft
-if(comboKeys['KeyS']&&comboKeys['KeyD']){player.x=player.x+(3*pSpeed);player.y=player.y+(3*pSpeed)}//DownRight
+if(comboKeys['KeyW']&&comboKeys['KeyA']){player.x=player.x- 3;player.y=player.y- 3}//UpLeft
+if(comboKeys['KeyW']&&comboKeys['KeyD']){player.x=player.x+ 3;player.y=player.y- 3}//UpRight
+if(comboKeys['KeyS']&&comboKeys['KeyA']){player.x=player.x- 3;player.y=player.y+ 3}//DownLeft
+if(comboKeys['KeyS']&&comboKeys['KeyD']){player.x=player.x+ 3;player.y=player.y+ 3}//DownRight
 
 //game border   x={0-1302},y={0-720}
 if(player.x<0){player.x=0}
@@ -113,10 +115,11 @@ enemy='purple';orange.x=-100;orange.y=-100;timer=1800;timerType=4;}}
 function Timer4(){timer=timer-1;
     if(timer<0 && timerType==4){
 alert('Congrats on living');
-enemy='end';purple.x=-100;purple.y=-100;timer=30000;timerType=5}}
+enemy='end';purple.x=-100;purple.y=-100;timer=30000;timerType=5;end=1}}
 
 let GreenTimer=180;let PurpleTimer=30;let orangePath=4;
 function enemyMove(){
+    if(end==0){
 if(ded>0){[blue.x,blue.y,green.x,green.y,orange.x,orange.y,purple.x,purple.y,player.x,player.y]=[-100,-100,-100,-100,-100,-100,
 -100,-100,-200,-200]}
 
@@ -167,9 +170,8 @@ if(enemy=='purple'){if(0<PurpleTimer){PurpleTimer=PurpleTimer-1}
  if(PurpleTimer==0){
     if(Math.floor(Math.random()*6)==1){purple.x=(player.x-83)+(Math.random()*166);purple.y=(player.y-58)+(Math.random()*116)}
     else{purple.x=Math.random()*1285;purple.y=Math.random()*675};
-PurpleTimer=60;}}}
+PurpleTimer=60;}}}}
 
-let ded=0;
 function dethChek(){
     let playerCenterX=player.x+player.w/2;
     let playerCenterY=player.y+player.h/2;
@@ -203,25 +205,26 @@ let purpleCenterY=purple.y+purple.h/2;
     if(dethRange4<50){ded=1;alert("It s33ms yoU'R3 a bit PURPLE at youR 1oss... It's okay, just tRy again");}
 }
 
-function images(){if(ded>0){ded=1.1;bg.src='../images/RanbowFwens_deth.png';enemy=ded}
+function images(){
+    if(end==0){
+    if(ded>0){ded=1.1;bg.src='../images/RanbowFwens_deth.png';enemy=ded}
 if(enemy=='end'&&endscreen.complete){ctx.drawImage(endscreen,0,0,1502,920)}
-if(bg.complete){ctx.drawImage(bg, 0, 0,1502,920);}
+if(bg.complete){ctx.drawImage(bg, 0, 0,1402,920);}
+if(bg.src.includes('RanbowFwens_BG.png')){
+
 if(playerSprite.complete){ctx.drawImage(playerSprite,player.x,player.y,player.w,player.h)}
 if(blueSprite.complete){ctx.drawImage(blueSprite,blue.x,blue.y,blue.w,blue.h)}
 if(greenSprite.complete){ctx.drawImage(greenSprite,green.x,green.y,green.w,green.h)}
 if(orangeSprite.complete){ctx.drawImage(orangeSprite,orange.x,orange.y,orange.w,orange.h)}
 if(purpleSprite.complete){ctx.drawImage(purpleSprite,purple.x,purple.y,purple.w,purple.h)}
+   if(ded==1){ctx.fillStyle='#000000';ctx.fillRect(0,0,canvas.width,canvas.height)}}}
+if(endscreen.complete&&end==1){ctx.drawImage(endscreen,0,0,1402,920)}
+requestAnimationFrame(images);}
 
-    //if(IntroSprite.complete){ctx.drawImage(IntroSprite,intro.x,intro.y,intro.w,intro.h)}
-   if(ded==1){ctx.fillStyle='#000000';ctx.fillRect(0,0,canvas.width,canvas.height)}}
-
-function loops(){images();dethChek();enemyMove();
-    if(ded==0){Timer1();Timer2();Timer3();Timer4()};
-    requestAnimationFrame(loops);}loops()
-
-
-
-    //   Need to work on:add the seller guy maybe,add end screen, add thingy to let player know they're being targeted
+function loops(){if(end==0){
+    dethChek();enemyMove();
+    if(ded==0){Timer1();Timer2();Timer3();Timer4()}}
+    requestAnimationFrame(loops);}
     </script>
 </body>
 </html>

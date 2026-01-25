@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ball</title>
+     <style>
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial}
+    #game{display:block;background:#0000;width:100vw;height:100vh}</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+    <script>
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+let DPR=Math.max(1, window.devicePixelRatio||1);
+function resize(){
+  canvas.width=innerWidth*DPR;
+  canvas.height=innerHeight*DPR;
+  canvas.style.width=innerWidth+'px';
+  canvas.style.height=innerHeight+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);}
+addEventListener('resize', resize);
+resize();
+
+    const ball={x:0,
+        y:0,
+        w:20,
+        h:20,
+        color:'#0000'}
+
+function handleKeyPress(e) {
+    if(e.code==='ArrowLeft'){ball.x-=10;}
+if (e.code==='ArrowRight'){ball.x+=10;}
+if(ball.x<0){ball.x=0;}}
+</script>
+</body>
+</html>
